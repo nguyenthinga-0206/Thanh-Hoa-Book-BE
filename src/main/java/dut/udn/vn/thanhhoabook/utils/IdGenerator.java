@@ -1,4 +1,4 @@
-package dut.udn.vn.thanhhoabook.model;
+package dut.udn.vn.thanhhoabook.utils;
 
 import org.hibernate.HibernateException;
 import org.hibernate.MappingException;

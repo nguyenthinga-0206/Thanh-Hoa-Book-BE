@@ -64,9 +64,12 @@ public class Book {
             inverseJoinColumns = @JoinColumn(name = "author_id"))
     private List<Author> authorList;
 
-    @ManyToOne
-    @JoinColumn(name = "producer_id")
-    private Producer producer;
+    @ManyToMany
+    @Fetch(FetchMode.SUBSELECT)
+    @JoinTable(name = "book_producer",
+            joinColumns = @JoinColumn(name = "book_id"),
+            inverseJoinColumns = @JoinColumn(name = "producer_id"))
+    private List<Producer> producerList;
 
     @ManyToMany(fetch = FetchType.EAGER)
     @Fetch(FetchMode.SUBSELECT)

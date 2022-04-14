@@ -12,6 +12,7 @@ import java.time.LocalDate;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
+@Table(name = "users")
 public class User {
 
     @Id
@@ -32,6 +33,5 @@ public class User {
     private String image;
 
     @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn
     private Account account;
 }

@@ -18,7 +18,7 @@ public class Producer {
 
     private String name;
 
-    @OneToMany(mappedBy = "producer")
+    @ManyToMany(mappedBy = "authorList")
     @JsonIgnore
     List<Book> bookList;
 }
