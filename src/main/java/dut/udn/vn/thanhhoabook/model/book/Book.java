@@ -11,6 +11,7 @@ import org.hibernate.annotations.FetchMode;
 import javax.persistence.*;
 import javax.validation.constraints.Digits;
 import java.math.BigDecimal;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Entity
@@ -21,25 +22,25 @@ import java.util.List;
 public class Book {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+    private Long id;
 
     private String name;
 
     private String code;
 
-    private int yearPublishing;
+    private Integer yearPublishing;
 
-    private int quantity;
+    private Integer quantity;
 
-    private int weight;
+    private Integer weight;
 
-    private float width;
+    private Float width;
 
-    private float lenght;
+    private Float lenght;
 
-    private float height;
+    private Float height;
 
-    private int pageNumber;
+    private Integer pageNumber;
 
     @Enumerated(EnumType.STRING)
     private ELanguage language;
@@ -82,5 +83,9 @@ public class Book {
     @JsonIgnore
     List<OrderDetails> orderDetailsList;
 
-    private boolean deleteFlag = Boolean.FALSE;
+    private Boolean deleteFlag = Boolean.FALSE;
+
+    private String userUpdateFlag;
+
+    private LocalDateTime timeUpdateFlag;
 }

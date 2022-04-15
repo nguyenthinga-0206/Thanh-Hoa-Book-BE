@@ -6,6 +6,7 @@ import lombok.*;
 
 import javax.persistence.*;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Entity
 @Getter
@@ -17,7 +18,7 @@ public class User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+    private Long id;
 
     private String fullName;
 
@@ -34,4 +35,10 @@ public class User {
 
     @OneToOne(cascade = CascadeType.ALL)
     private Account account;
+
+    private Boolean deleteFlag = Boolean.FALSE;
+
+    private String userUpdateFlag;
+
+    private LocalDateTime timeUpdateFlag;
 }

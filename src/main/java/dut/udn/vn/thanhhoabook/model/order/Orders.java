@@ -5,6 +5,7 @@ import dut.udn.vn.thanhhoabook.model.user.Account;
 import lombok.*;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Entity
@@ -15,7 +16,7 @@ import java.util.List;
 public class Orders {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+    private Long id;
 
     private String code;
 
@@ -37,5 +38,9 @@ public class Orders {
     @JoinColumn(name = "account")
     private Account account;
 
-    private boolean deleteFlag = Boolean.FALSE;
+    private Boolean deleteFlag = Boolean.FALSE;
+
+    private String userUpdateFlag;
+
+    private LocalDateTime timeUpdateFlag;
 }

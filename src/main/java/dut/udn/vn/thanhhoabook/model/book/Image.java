@@ -3,6 +3,7 @@ package dut.udn.vn.thanhhoabook.model.book;
 import lombok.*;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 
 @Entity
 @Getter
@@ -12,7 +13,7 @@ import javax.persistence.*;
 public class Image {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+    private Long id;
 
     private String name;
 
@@ -22,4 +23,9 @@ public class Image {
     @JoinColumn(name = "book_id")
     private Book book;
 
+    private Boolean deleteFlag = Boolean.FALSE;
+
+    private String userUpdateFlag;
+
+    private LocalDateTime timeUpdateFlag;
 }

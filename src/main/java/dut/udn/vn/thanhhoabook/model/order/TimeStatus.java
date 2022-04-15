@@ -14,7 +14,7 @@ import java.time.LocalDateTime;
 public class TimeStatus {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+    private Long id;
 
     private LocalDateTime time;
 
@@ -24,4 +24,10 @@ public class TimeStatus {
     @ManyToOne
     @JoinColumn(name = "orders_id")
     private Orders orders;
+
+    private Boolean deleteFlag = Boolean.FALSE;
+
+    private String userUpdateFlag;
+
+    private LocalDateTime timeUpdateFlag;
 }

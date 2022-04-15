@@ -6,6 +6,7 @@ import dut.udn.vn.thanhhoabook.model.order.Orders;
 import lombok.*;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Entity
@@ -31,5 +32,9 @@ public class Account {
     @JsonIgnore
     List<Orders> ordersList;
 
-    private boolean deleteFlag = Boolean.FALSE;
+    private Boolean deleteFlag = Boolean.FALSE;
+
+    private String userUpdateFlag;
+
+    private LocalDateTime timeUpdateFlag;
 }
