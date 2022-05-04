@@ -14,7 +14,7 @@ public class JwtUtil {
 
     private static final String SECRET_KEY = "bezKoderSecretKey";
 
-    private static final long TIME_TOKEN = 1000 * 60 *60;
+    private static final long TIME_TOKEN = 1000 * 60 *60 *12;
 
     public String generateJwtToken(MyUserDetails userPrincipal) {
         return generateTokenFromEmail(userPrincipal.getEmail());

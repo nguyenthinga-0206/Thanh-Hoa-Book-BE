@@ -6,7 +6,7 @@ import org.springframework.stereotype.Service;
 import java.util.Optional;
 
 @Service
-public interface IUserService {
+public interface IUserService extends IService<User, Integer> {
     Boolean isEmailExists(String email);
 
     Boolean isPhoneExists(String phone);

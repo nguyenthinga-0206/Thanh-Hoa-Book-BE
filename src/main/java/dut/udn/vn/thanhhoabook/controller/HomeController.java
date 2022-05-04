@@ -38,21 +38,6 @@ public class HomeController {
     @Autowired
     private PasswordEncoder passwordEncoder;
 
-    @GetMapping("/admin")
-    private ResponseEntity<?> admin(){
-        return ResponseEntity.ok("Hello World Admin!");
-    }
-
-    @GetMapping("/management")
-    private ResponseEntity<?> management(){
-        return ResponseEntity.ok("Hello World Management!");
-    }
-
-    @GetMapping("/user")
-    private ResponseEntity<?> user(){
-        return ResponseEntity.ok("Hello World User!");
-    }
-
     @PostMapping("/login")
     private ResponseEntity<LoginResponse> login(@Valid @RequestBody LoginRequest loginRequest, BindingResult bindResult) {
 
