@@ -6,5 +6,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import java.util.List;
 
 public interface IOrderReponsitory extends JpaRepository<Orders, Integer> {
-    List<Orders> findByDeleteFlagFalse();
+    List<Orders> findOrdersByDeleteFlagFalse();
 }

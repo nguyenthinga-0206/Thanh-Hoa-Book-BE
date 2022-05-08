@@ -1,11 +1,11 @@
 package dut.udn.vn.thanhhoabook.config;
 
+import dut.udn.vn.thanhhoabook.security.jwt.AuthEntryPointJwt;
 import dut.udn.vn.thanhhoabook.security.jwt.JwtRequestFilter;
 import dut.udn.vn.thanhhoabook.security.service.MyUserDetailsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -26,8 +26,15 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         return super.authenticationManagerBean();
     }
 
-    @Autowired
-    private JwtRequestFilter jwtRequestFilter;
+    @Bean
+    public AuthEntryPointJwt entryPointJwt(){
+        return new AuthEntryPointJwt();
+    }
+
+    @Bean
+    public JwtRequestFilter jwtRequestFilter() {
+        return new JwtRequestFilter();
+    }
 
     @Autowired
     private MyUserDetailsService myUserDetailService;
@@ -47,19 +54,21 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         http.csrf().disable();
         http.authorizeRequests().anyRequest().permitAll();
 
-//        http.csrf().disable()
+//        http.csrf().ignoringAntMatchers("/api/**");
+//        http.antMatcher("/api/**").httpBasic().authenticationEntryPoint(entryPointJwt())
+//                .and()
 //                .authorizeRequests()
-//                .antMatchers(HttpMethod.GET, "/api/**").permitAll()
+//                .antMatchers("/api/**").permitAll()
 //                .antMatchers("/api/home").permitAll()
 //                .antMatchers(HttpMethod.POST, "/api/login").permitAll()
 //                .antMatchers(HttpMethod.POST, "/api/register").permitAll()
 //                .antMatchers(HttpMethod.POST, "/api/logout").permitAll()
 //                .antMatchers(HttpMethod.GET, "/api/users").hasAnyRole("ADMIN", "MANAGEMENT")
 //                .antMatchers(HttpMethod.GET, "/api/orders").hasAnyRole("ADMIN", "MANAGEMENT")
-//                .anyRequest().authenticated()
-//                .and().sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+//                .and().sessionManagement()
+//                .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
 //                .and()
-//                .addFilterBefore(this.jwtRequestFilter, UsernamePasswordAuthenticationFilter.class);
+//                .addFilterBefore(jwtRequestFilter(), UsernamePasswordAuthenticationFilter.class);
     }
 }
 

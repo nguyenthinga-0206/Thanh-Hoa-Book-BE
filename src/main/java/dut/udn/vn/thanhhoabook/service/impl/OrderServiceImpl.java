@@ -16,7 +16,7 @@ public class OrderServiceImpl implements IOrderService {
 
     @Override
     public List<Orders> getAll() {
-        return orderReponsitory.findByDeleteFlagFalse();
+        return orderReponsitory.findOrdersByDeleteFlagFalse();
     }
 
     @Override

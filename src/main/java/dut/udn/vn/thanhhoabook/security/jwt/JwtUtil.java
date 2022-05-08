@@ -4,15 +4,15 @@ import dut.udn.vn.thanhhoabook.security.service.MyUserDetails;
 import io.jsonwebtoken.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.stereotype.Service;
+import org.springframework.stereotype.Component;
 
 import java.util.Date;
 
-@Service
+@Component
 public class JwtUtil {
     private static final Logger logger = LoggerFactory.getLogger(JwtUtil.class);
 
-    private static final String SECRET_KEY = "bezKoderSecretKey";
+    private static final String SECRET_KEY = "secret";
 
     private static final long TIME_TOKEN = 1000 * 60 *60 *12;
 
@@ -21,8 +21,8 @@ public class JwtUtil {
     }
 
     public String generateTokenFromEmail(String email) {
-        return Jwts.builder().setSubject(email).setIssuedAt(new Date())
-                .setExpiration(new Date((new Date()).getTime() + TIME_TOKEN))
+        return Jwts.builder().setSubject(email).setIssuedAt(new Date(System.currentTimeMillis()))
+                .setExpiration(new Date(System.currentTimeMillis() + TIME_TOKEN))
                 .signWith(SignatureAlgorithm.HS512, SECRET_KEY)
                 .compact();
     }
