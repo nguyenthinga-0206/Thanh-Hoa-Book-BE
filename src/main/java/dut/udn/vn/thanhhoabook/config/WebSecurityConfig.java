@@ -3,6 +3,7 @@ package dut.udn.vn.thanhhoabook.config;
 import dut.udn.vn.thanhhoabook.security.jwt.AuthEntryPointJwt;
 import dut.udn.vn.thanhhoabook.security.jwt.JwtRequestFilter;
 import dut.udn.vn.thanhhoabook.security.service.MyUserDetailsService;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -48,6 +49,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
+
+    @Bean
+    public ModelMapper modelMapper(){return new ModelMapper();}
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {

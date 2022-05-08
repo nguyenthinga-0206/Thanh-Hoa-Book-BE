@@ -21,7 +21,7 @@ public class Producer {
 
     @ManyToMany(mappedBy = "authorList")
     @JsonIgnore
-    List<Book> bookList;
+    private List<Book> bookList;
 
     private Boolean deleteFlag = Boolean.FALSE;
 

@@ -1,9 +1,7 @@
 package dut.udn.vn.thanhhoabook.security.service;
 
-import dut.udn.vn.thanhhoabook.model.user.Account;
 import dut.udn.vn.thanhhoabook.model.user.User;
-import dut.udn.vn.thanhhoabook.service.IAccountService;
-import dut.udn.vn.thanhhoabook.service.IUserService;
+import dut.udn.vn.thanhhoabook.service.user.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;

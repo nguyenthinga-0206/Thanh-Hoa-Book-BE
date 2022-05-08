@@ -1,8 +1,8 @@
-package dut.udn.vn.thanhhoabook.service.impl;
+package dut.udn.vn.thanhhoabook.service.impl.book;
 
 import dut.udn.vn.thanhhoabook.model.book.Book;
-import dut.udn.vn.thanhhoabook.reponsitory.IBookReponsitory;
-import dut.udn.vn.thanhhoabook.service.IBookService;
+import dut.udn.vn.thanhhoabook.reponsitory.book.IBookReponsitory;
+import dut.udn.vn.thanhhoabook.service.book.IBookService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -20,12 +20,17 @@ public class BookServiceImpl implements IBookService {
     }
 
     @Override
-    public Optional<Book> getById(Integer id) {
+    public Optional<Book> getById(Long id) {
         return bookReponsitory.findById(id);
     }
 
     @Override
     public Book save(Book book) {
         return bookReponsitory.save(book);
+    }
+
+    @Override
+    public Boolean existsByCode(String code) {
+        return bookReponsitory.existsByCode(code);
     }
 }

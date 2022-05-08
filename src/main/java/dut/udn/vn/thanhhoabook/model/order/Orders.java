@@ -28,11 +28,11 @@ public class Orders {
 
     @OneToMany(mappedBy = "orders")
     @JsonIgnore
-    List<OrderDetails> orderDetailsList;
+    private List<OrderDetails> orderDetailsList;
 
     @OneToMany(mappedBy = "orders")
     @JsonIgnore
-    List<TimeStatus> timeStatusList;
+    private List<TimeStatus> timeStatusList;
 
     @ManyToOne
     @JoinColumn(name = "account")

@@ -1,7 +1,7 @@
 package dut.udn.vn.thanhhoabook.controller;
 
 import dut.udn.vn.thanhhoabook.model.user.User;
-import dut.udn.vn.thanhhoabook.service.IUserService;
+import dut.udn.vn.thanhhoabook.service.user.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

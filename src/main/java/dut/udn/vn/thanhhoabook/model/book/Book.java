@@ -48,15 +48,14 @@ public class Book {
     @Enumerated(EnumType.STRING)
     private ECover formCover;
 
-    @Digits(integer = 10, fraction = 2)
+//    @Digits(integer = 10, fraction = 2)
     private BigDecimal price;
 
     @Column(columnDefinition = "TEXT")
     private String description;
 
     @OneToMany(mappedBy = "book")
-    @JsonIgnore
-    List<Image> imageList;
+    private List<Image> imageList;
 
     @ManyToMany(fetch = FetchType.EAGER)
     @Fetch(FetchMode.SUBSELECT)
@@ -81,7 +80,7 @@ public class Book {
 
     @OneToMany(mappedBy = "book")
     @JsonIgnore
-    List<OrderDetails> orderDetailsList;
+    private List<OrderDetails> orderDetailsList;
 
     private Boolean deleteFlag = Boolean.FALSE;
 

@@ -1,8 +1,8 @@
-package dut.udn.vn.thanhhoabook.service.impl;
+package dut.udn.vn.thanhhoabook.service.impl.user;
 
 import dut.udn.vn.thanhhoabook.model.user.User;
-import dut.udn.vn.thanhhoabook.reponsitory.IUserReponsitory;
-import dut.udn.vn.thanhhoabook.service.IUserService;
+import dut.udn.vn.thanhhoabook.reponsitory.user.IUserReponsitory;
+import dut.udn.vn.thanhhoabook.service.user.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -35,7 +35,7 @@ public class UserServiceImpl implements IUserService {
     }
 
     @Override
-    public Optional<User> getById(Integer id) {
+    public Optional<User> getById(Long id) {
         return userReponsitory.findById(id);
     }
 

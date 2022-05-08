@@ -30,7 +30,7 @@ public class Account {
 
     @OneToMany(mappedBy = "account")
     @JsonIgnore
-    List<Orders> ordersList;
+    private List<Orders> ordersList;
 
     private Boolean deleteFlag = Boolean.FALSE;
 
