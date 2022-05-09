@@ -6,6 +6,7 @@ import dut.udn.vn.thanhhoabook.service.user.IAccountService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -21,5 +22,20 @@ public class AccountServiceImpl implements IAccountService {
     @Override
     public Optional<Account> findById(String username) {
         return accountReponsitory.findById(username);
+    }
+
+    @Override
+    public List<Account> getAll() {
+        return accountReponsitory.findAccountByDeleteFlagFalse();
+    }
+
+    @Override
+    public Optional<Account> getById(String id) {
+        return accountReponsitory.findById(id);
+    }
+
+    @Override
+    public Account save(Account account) {
+        return accountReponsitory.save(account);
     }
 }

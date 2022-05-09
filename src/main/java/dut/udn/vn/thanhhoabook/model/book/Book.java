@@ -48,7 +48,6 @@ public class Book {
     @Enumerated(EnumType.STRING)
     private ECover formCover;
 
-//    @Digits(integer = 10, fraction = 2)
     private BigDecimal price;
 
     @Column(columnDefinition = "TEXT")
