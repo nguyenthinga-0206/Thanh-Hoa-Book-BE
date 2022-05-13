@@ -1,5 +1,6 @@
 package dut.udn.vn.thanhhoabook.controller;
 
+import dut.udn.vn.thanhhoabook.dto.book.AddBookRequest;
 import dut.udn.vn.thanhhoabook.dto.book.BookRequest;
 import dut.udn.vn.thanhhoabook.model.book.Book;
 import dut.udn.vn.thanhhoabook.model.book.Image;
@@ -50,6 +51,18 @@ public class BookController {
         bookService.save(book);
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
+
+    @PutMapping("add-book")
+    public ResponseEntity<Status> addBook(@Valid @RequestBody AddBookRequest addBookRequest) {
+        Optional<Book> bookOptional = bookService.getById(addBookRequest.getId());
+        if (!bookOptional.isPresent()) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        bookOptional.get().setQuantity(bookOptional.get().getQuantity()+addBookRequest.getQuantity());
+        bookService.save(bookOptional.get());
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
 
     @PutMapping()
     public ResponseEntity<Status> updateBook(@Valid @RequestBody BookRequest bookRequest) {

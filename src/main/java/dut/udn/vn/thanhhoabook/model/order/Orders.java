@@ -40,6 +40,10 @@ public class Orders {
 
     private Boolean deleteFlag = Boolean.FALSE;
 
+    private String userCreateFlag;
+
+    private LocalDateTime timeCreateFlag;
+
     private String userUpdateFlag;
 
     private LocalDateTime timeUpdateFlag;
