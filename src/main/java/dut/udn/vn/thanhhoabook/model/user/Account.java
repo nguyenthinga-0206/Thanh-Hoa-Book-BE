@@ -30,9 +30,13 @@ public class Account {
 
     @OneToMany(mappedBy = "account")
     @JsonIgnore
-    List<Orders> ordersList;
+    private List<Orders> ordersList;
 
     private Boolean deleteFlag = Boolean.FALSE;
+
+    private String userCreateFlag;
+
+    private LocalDateTime timeCreateFlag;
 
     private String userUpdateFlag;
 

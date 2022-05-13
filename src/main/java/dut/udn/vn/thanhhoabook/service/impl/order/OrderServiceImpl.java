@@ -1,8 +1,8 @@
-package dut.udn.vn.thanhhoabook.service.impl;
+package dut.udn.vn.thanhhoabook.service.impl.order;
 
 import dut.udn.vn.thanhhoabook.model.order.Orders;
-import dut.udn.vn.thanhhoabook.reponsitory.IOrderReponsitory;
-import dut.udn.vn.thanhhoabook.service.IOrderService;
+import dut.udn.vn.thanhhoabook.reponsitory.order.IOrderReponsitory;
+import dut.udn.vn.thanhhoabook.service.order.IOrderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -20,7 +20,7 @@ public class OrderServiceImpl implements IOrderService {
     }
 
     @Override
-    public Optional<Orders> getById(Integer id) {
+    public Optional<Orders> getById(Long id) {
         return orderReponsitory.findById(id);
     }
 

@@ -28,17 +28,21 @@ public class Orders {
 
     @OneToMany(mappedBy = "orders")
     @JsonIgnore
-    List<OrderDetails> orderDetailsList;
+    private List<OrderDetails> orderDetailsList;
 
     @OneToMany(mappedBy = "orders")
     @JsonIgnore
-    List<TimeStatus> timeStatusList;
+    private List<TimeStatus> timeStatusList;
 
     @ManyToOne
     @JoinColumn(name = "account")
     private Account account;
 
     private Boolean deleteFlag = Boolean.FALSE;
+
+    private String userCreateFlag;
+
+    private LocalDateTime timeCreateFlag;
 
     private String userUpdateFlag;
 

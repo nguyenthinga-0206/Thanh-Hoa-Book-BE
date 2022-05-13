@@ -1,7 +1,7 @@
 package dut.udn.vn.thanhhoabook.controller;
 
 import dut.udn.vn.thanhhoabook.model.order.Orders;
-import dut.udn.vn.thanhhoabook.service.IOrderService;
+import dut.udn.vn.thanhhoabook.service.order.IOrderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -24,7 +24,7 @@ public class OrderController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Orders> findByOrder(@PathVariable Integer id){
+    public ResponseEntity<Orders> findByOrder(@PathVariable Long id){
         Optional<Orders> ordersList = ordersService.getById(id);
         return ordersList.isPresent() ? new ResponseEntity<>(HttpStatus.NOT_FOUND) : new ResponseEntity<>(ordersList.get(), HttpStatus.OK);
     }

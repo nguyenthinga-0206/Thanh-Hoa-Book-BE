@@ -9,7 +9,6 @@ import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
 
 import javax.persistence.*;
-import javax.validation.constraints.Digits;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.List;
@@ -48,15 +47,13 @@ public class Book {
     @Enumerated(EnumType.STRING)
     private ECover formCover;
 
-    @Digits(integer = 10, fraction = 2)
     private BigDecimal price;
 
     @Column(columnDefinition = "TEXT")
     private String description;
 
     @OneToMany(mappedBy = "book")
-    @JsonIgnore
-    List<Image> imageList;
+    private List<Image> imageList;
 
     @ManyToMany(fetch = FetchType.EAGER)
     @Fetch(FetchMode.SUBSELECT)
@@ -65,12 +62,9 @@ public class Book {
             inverseJoinColumns = @JoinColumn(name = "author_id"))
     private List<Author> authorList;
 
-    @ManyToMany
-    @Fetch(FetchMode.SUBSELECT)
-    @JoinTable(name = "book_producer",
-            joinColumns = @JoinColumn(name = "book_id"),
-            inverseJoinColumns = @JoinColumn(name = "producer_id"))
-    private List<Producer> producerList;
+    @ManyToOne
+    @JoinColumn(name="producer_id")
+    private Producer producer;
 
     @ManyToMany(fetch = FetchType.EAGER)
     @Fetch(FetchMode.SUBSELECT)
@@ -81,9 +75,13 @@ public class Book {
 
     @OneToMany(mappedBy = "book")
     @JsonIgnore
-    List<OrderDetails> orderDetailsList;
+    private List<OrderDetails> orderDetailsList;
 
     private Boolean deleteFlag = Boolean.FALSE;
+
+    private String userCreateFlag;
+
+    private LocalDateTime timeCreateFlag;
 
     private String userUpdateFlag;
 

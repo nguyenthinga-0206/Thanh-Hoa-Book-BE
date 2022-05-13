@@ -19,11 +19,15 @@ public class Producer {
 
     private String name;
 
-    @ManyToMany(mappedBy = "authorList")
+    @OneToMany(mappedBy = "producer")
     @JsonIgnore
-    List<Book> bookList;
+    private List<Book> bookList;
 
     private Boolean deleteFlag = Boolean.FALSE;
+
+    private String userCreateFlag;
+
+    private LocalDateTime timeCreateFlag;
 
     private String userUpdateFlag;
 

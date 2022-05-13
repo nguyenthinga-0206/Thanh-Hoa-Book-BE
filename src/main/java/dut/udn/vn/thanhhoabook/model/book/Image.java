@@ -1,5 +1,6 @@
 package dut.udn.vn.thanhhoabook.model.book;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 
 import javax.persistence.*;
@@ -21,9 +22,14 @@ public class Image {
 
     @ManyToOne
     @JoinColumn(name = "book_id")
+    @JsonIgnore
     private Book book;
 
     private Boolean deleteFlag = Boolean.FALSE;
+
+    private String userCreateFlag;
+
+    private LocalDateTime timeCreateFlag;
 
     private String userUpdateFlag;
 
