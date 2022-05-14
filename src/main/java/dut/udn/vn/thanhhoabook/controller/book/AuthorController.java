@@ -18,7 +18,7 @@ public class AuthorController {
     @Autowired
     private IAuthorService authorService;
 
-    @GetMapping("author")
+    @GetMapping()
     public ResponseEntity<List<Author>> listAuthor() {
         List<Author> authorList = authorService.getAll();
         return authorList.isEmpty() ? new ResponseEntity<>(HttpStatus.NOT_FOUND) : new ResponseEntity<>(authorList, HttpStatus.OK);

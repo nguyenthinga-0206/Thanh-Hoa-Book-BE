@@ -18,7 +18,7 @@ public class ProducerController {
     @Autowired
     private IProducerService producerService;
 
-    @GetMapping("producer")
+    @GetMapping()
     public ResponseEntity<List<Producer>> listProducer() {
         List<Producer> producerList = producerService.getAll();
         return producerList.isEmpty() ? new ResponseEntity<>(HttpStatus.NOT_FOUND) : new ResponseEntity<>(producerList, HttpStatus.OK);

@@ -18,7 +18,7 @@ public class CategoryController {
     @Autowired
     private ICategoryService categoryService;
 
-    @GetMapping("category")
+    @GetMapping()
     public ResponseEntity<List<Category>> listCategory() {
         List<Category> categoryList = categoryService.getAll();
         return categoryList.isEmpty() ? new ResponseEntity<>(HttpStatus.NOT_FOUND) : new ResponseEntity<>(categoryList, HttpStatus.OK);
