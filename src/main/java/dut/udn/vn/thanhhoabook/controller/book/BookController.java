@@ -1,13 +1,9 @@
-package dut.udn.vn.thanhhoabook.controller;
+package dut.udn.vn.thanhhoabook.controller.book;
 
 import dut.udn.vn.thanhhoabook.dto.book.AddBookRequest;
 import dut.udn.vn.thanhhoabook.dto.book.BookRequest;
-import dut.udn.vn.thanhhoabook.model.book.Book;
-import dut.udn.vn.thanhhoabook.model.book.Image;
-import dut.udn.vn.thanhhoabook.model.book.Producer;
-import dut.udn.vn.thanhhoabook.service.book.IBookService;
-import dut.udn.vn.thanhhoabook.service.book.IImageService;
-import dut.udn.vn.thanhhoabook.service.book.IProducerService;
+import dut.udn.vn.thanhhoabook.model.book.*;
+import dut.udn.vn.thanhhoabook.service.book.*;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -26,9 +22,6 @@ public class BookController {
     private IBookService bookService;
 
     @Autowired
-    private IProducerService producerService;
-
-    @Autowired
     private IImageService imageService;
 
     @Autowired
@@ -38,12 +31,6 @@ public class BookController {
     public ResponseEntity<List<Book>> listBook() {
         List<Book> bookList = bookService.getAll();
         return bookList.isEmpty() ? new ResponseEntity<>(HttpStatus.NOT_FOUND) : new ResponseEntity<>(bookList, HttpStatus.OK);
-    }
-
-    @GetMapping("producer")
-    public ResponseEntity<List<Producer>> listProducer() {
-        List<Producer> producerList = producerService.getAll();
-        return producerList.isEmpty() ? new ResponseEntity<>(HttpStatus.NOT_FOUND) : new ResponseEntity<>(producerList, HttpStatus.OK);
     }
 
     @GetMapping("/{id}")
