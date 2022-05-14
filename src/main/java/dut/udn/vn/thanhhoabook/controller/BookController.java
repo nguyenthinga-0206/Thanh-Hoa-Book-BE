@@ -13,7 +13,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.transaction.Status;
-import javax.validation.Valid;
 import java.util.List;
 import java.util.Optional;
 
@@ -36,8 +35,15 @@ public class BookController {
         return bookList.isEmpty() ? new ResponseEntity<>(HttpStatus.NOT_FOUND) : new ResponseEntity<>(bookList, HttpStatus.OK);
     }
 
+    @GetMapping("/{id}")
+    public ResponseEntity<Book> getById(@PathVariable("id") Long id) {
+        Optional<Book> book = bookService.getById(id);
+        return book.map(value -> new ResponseEntity<>(value, HttpStatus.OK))
+                .orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
+    }
+
     @PostMapping()
-    public ResponseEntity<Status> createBook(@Valid @RequestBody BookRequest bookRequest) {
+    public ResponseEntity<Status> createBook(@RequestBody BookRequest bookRequest) {
         if (bookRequest == null) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
@@ -45,7 +51,7 @@ public class BookController {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
         Book book = modelMapper.map(bookRequest, Book.class);
-        for (Image image: book.getImageList()) {
+        for (Image image : book.getImageList()) {
             imageService.save(image);
         }
         bookService.save(book);
@@ -53,19 +59,19 @@ public class BookController {
     }
 
     @PutMapping("add-book")
-    public ResponseEntity<Status> addBook(@Valid @RequestBody AddBookRequest addBookRequest) {
+    public ResponseEntity<Status> addBook(@RequestBody AddBookRequest addBookRequest) {
         Optional<Book> bookOptional = bookService.getById(addBookRequest.getId());
         if (!bookOptional.isPresent()) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
-        bookOptional.get().setQuantity(bookOptional.get().getQuantity()+addBookRequest.getQuantity());
+        bookOptional.get().setQuantity(bookOptional.get().getQuantity() + addBookRequest.getQuantity());
         bookService.save(bookOptional.get());
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
 
     @PutMapping()
-    public ResponseEntity<Status> updateBook(@Valid @RequestBody BookRequest bookRequest) {
+    public ResponseEntity<Status> updateBook(@RequestBody BookRequest bookRequest) {
         Optional<Book> bookOptional = bookService.getById(bookRequest.getId());
         if (!bookOptional.isPresent()) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
