@@ -49,8 +49,10 @@ public class BookController {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
         Book book = modelMapper.map(bookRequest, Book.class);
-        for (Image image : book.getImageList()) {
-            imageService.save(image);
+        if (book.getImageList() != null) {
+            for (Image image : book.getImageList()) {
+                imageService.save(image);
+            }
         }
         bookService.save(book);
         return new ResponseEntity<>(HttpStatus.CREATED);
