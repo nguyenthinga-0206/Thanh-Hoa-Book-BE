@@ -1,4 +1,4 @@
-package dut.udn.vn.thanhhoabook.controller;
+package dut.udn.vn.thanhhoabook.controller.users;
 
 import dut.udn.vn.thanhhoabook.dto.user.UserRequest;
 import dut.udn.vn.thanhhoabook.model.user.User;

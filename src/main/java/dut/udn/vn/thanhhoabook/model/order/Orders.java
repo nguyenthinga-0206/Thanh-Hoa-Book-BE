@@ -1,6 +1,7 @@
 package dut.udn.vn.thanhhoabook.model.order;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import dut.udn.vn.thanhhoabook.contans.order.EStatus;
 import dut.udn.vn.thanhhoabook.model.user.Account;
 import lombok.*;
 
@@ -37,11 +38,10 @@ public class Orders {
     private List<OrderDetails> orderDetailsList;
 
     /*
-    Trạng thái đơn hàng, thời gian cập nhật
+    Trạng thái đơn hàng
      */
-    @OneToMany(mappedBy = "orders")
-    @JsonIgnore
-    private List<TimeStatus> timeStatusList;
+    @Enumerated(EnumType.STRING)
+    private EStatus status = EStatus.PENDING;
 
     @ManyToOne
     @JoinColumn(name = "account")
