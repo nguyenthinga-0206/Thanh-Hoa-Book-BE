@@ -18,6 +18,9 @@ public class Orders {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    /*
+    Mã đơn hàng
+     */
     private String code;
 
     private String fullName;
@@ -26,10 +29,16 @@ public class Orders {
 
     private String address;
 
+    /*
+    Chi tiết đơn hàng
+     */
     @OneToMany(mappedBy = "orders")
     @JsonIgnore
     private List<OrderDetails> orderDetailsList;
 
+    /*
+    Trạng thái đơn hàng, thời gian cập nhật
+     */
     @OneToMany(mappedBy = "orders")
     @JsonIgnore
     private List<TimeStatus> timeStatusList;
