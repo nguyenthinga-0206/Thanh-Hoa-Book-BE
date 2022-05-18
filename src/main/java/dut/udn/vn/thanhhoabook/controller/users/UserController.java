@@ -44,7 +44,7 @@ public class UserController {
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
 
-    @PutMapping("")
+    @PutMapping()
     public ResponseEntity<Status> updateManagement(@RequestBody UserRequest userRequest) {
         Optional<User> userOptional = userService.getById(userRequest.getId());
         if (!userOptional.isPresent()) {
@@ -55,7 +55,7 @@ public class UserController {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
-    @PutMapping("/password")
+    @PutMapping("/change-password")
     public ResponseEntity<Status> changePassword(@RequestBody ChangePasswordRequest changePasswordRequest) {
         Boolean isSuccessful = this.userService.changePassword(changePasswordRequest);
         if (isSuccessful) {

@@ -24,6 +24,8 @@ public class Account {
     @Enumerated(EnumType.STRING)
     private ERole role;
 
+    private Boolean enable = Boolean.TRUE;
+
     @OneToOne(mappedBy = "account")
     @JsonIgnore
     private User user;
