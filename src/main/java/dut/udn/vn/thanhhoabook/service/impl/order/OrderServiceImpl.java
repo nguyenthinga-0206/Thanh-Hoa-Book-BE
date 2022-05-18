@@ -1,5 +1,6 @@
 package dut.udn.vn.thanhhoabook.service.impl.order;
 
+import dut.udn.vn.thanhhoabook.dto.order.OrderResponse;
 import dut.udn.vn.thanhhoabook.model.order.Orders;
 import dut.udn.vn.thanhhoabook.reponsitory.order.IOrderReponsitory;
 import dut.udn.vn.thanhhoabook.service.order.IOrderService;
@@ -28,4 +29,9 @@ public class OrderServiceImpl implements IOrderService {
     public Orders save(Orders order) {
         return orderReponsitory.save(order);
     }
+
+//    @Override
+//    public Optional<OrderResponse> getOrderById(Long id) {
+//        return orderReponsitory.getOrderById(id);
+//    }
 }
