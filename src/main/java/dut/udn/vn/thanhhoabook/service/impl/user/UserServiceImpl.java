@@ -17,7 +17,7 @@ public class UserServiceImpl implements IUserService {
     private IUserReponsitory userReponsitory;
 
     @Autowired
-    PasswordEncoder passwordEncoder;
+    private PasswordEncoder passwordEncoder;
 
     @Override
     public Boolean isEmailExists(String email) {
@@ -59,6 +59,7 @@ public class UserServiceImpl implements IUserService {
 
     @Override
     public User save(User user) {
+        user.getAccount().setPassword(passwordEncoder.encode(user.getAccount().getPassword()));
         return userReponsitory.save(user);
     }
 }

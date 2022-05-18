@@ -25,9 +25,6 @@ public class UserController {
     @Autowired
     private ModelMapper modelMapper;
 
-    @Autowired
-    private PasswordEncoder passwordEncoder;
-
     @GetMapping()
     public ResponseEntity<List<User>> listUser() {
         List<User> userList = userService.getAll();
@@ -53,7 +50,6 @@ public class UserController {
         if (!userOptional.isPresent()) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
-        userRequest.getAccount().setPassword(passwordEncoder.encode(userRequest.getAccount().getPassword()));
         User user = modelMapper.map(userRequest, User.class);
         userService.save(user);
         return new ResponseEntity<>(HttpStatus.OK);
@@ -75,7 +71,6 @@ public class UserController {
         if (!userOptional.isPresent()) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
-        userRequest.getAccount().setPassword(passwordEncoder.encode(userRequest.getAccount().getPassword()));
         User user = modelMapper.map(userRequest, User.class);
         userService.save(user);
         return new ResponseEntity<>(HttpStatus.OK);
