@@ -1,5 +1,6 @@
 package dut.udn.vn.thanhhoabook.controller.users;
 
+import dut.udn.vn.thanhhoabook.dto.user.ChangePasswordRequest;
 import dut.udn.vn.thanhhoabook.dto.user.UserRequest;
 import dut.udn.vn.thanhhoabook.model.user.User;
 import dut.udn.vn.thanhhoabook.service.user.IUserService;
@@ -7,10 +8,10 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
 import javax.transaction.Status;
-import javax.validation.Valid;
 import java.util.List;
 import java.util.Optional;
 
@@ -24,6 +25,9 @@ public class UserController {
     @Autowired
     private ModelMapper modelMapper;
 
+    @Autowired
+    private PasswordEncoder passwordEncoder;
+
     @GetMapping()
     public ResponseEntity<List<User>> listUser() {
         List<User> userList = userService.getAll();
@@ -31,7 +35,7 @@ public class UserController {
     }
 
     @PostMapping()
-    public ResponseEntity<Status> createUser(@Valid @RequestBody UserRequest userRequest) {
+    public ResponseEntity<Status> createUser(@RequestBody UserRequest userRequest) {
         if (userRequest == null) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
@@ -43,12 +47,35 @@ public class UserController {
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
 
-    @PutMapping()
-    public ResponseEntity<Status> updateUser(@Valid @RequestBody UserRequest userRequest) {
+    @PutMapping("")
+    public ResponseEntity<Status> updateManagement(@RequestBody UserRequest userRequest) {
         Optional<User> userOptional = userService.getById(userRequest.getId());
         if (!userOptional.isPresent()) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
+        userRequest.getAccount().setPassword(passwordEncoder.encode(userRequest.getAccount().getPassword()));
+        User user = modelMapper.map(userRequest, User.class);
+        userService.save(user);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    @PutMapping("/password")
+    public ResponseEntity<Status> changePassword(@RequestBody ChangePasswordRequest changePasswordRequest) {
+        Boolean isSuccessful = this.userService.changePassword(changePasswordRequest);
+        if (isSuccessful) {
+            return new ResponseEntity<>(HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+    }
+
+    @PutMapping("/profile")
+    public ResponseEntity<Status> updateProfile(@RequestBody UserRequest userRequest) {
+        Optional<User> userOptional = userService.getById(userRequest.getId());
+        if (!userOptional.isPresent()) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        userRequest.getAccount().setPassword(passwordEncoder.encode(userRequest.getAccount().getPassword()));
         User user = modelMapper.map(userRequest, User.class);
         userService.save(user);
         return new ResponseEntity<>(HttpStatus.OK);
