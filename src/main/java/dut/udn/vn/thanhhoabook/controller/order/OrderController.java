@@ -45,7 +45,7 @@ public class OrderController {
         return orderDetailsList.isEmpty() ? new ResponseEntity<>(HttpStatus.NOT_FOUND) : new ResponseEntity<>(orderDetailsList, HttpStatus.OK);
     }
 
-    @PutMapping("status")
+    @PutMapping("/status")
     public ResponseEntity<Status> editStatus(@RequestBody StatusRequest statusRequest) {
         Optional<Orders> ordersOptional = ordersService.getById(statusRequest.getId());
         if (!ordersOptional.isPresent()) {
