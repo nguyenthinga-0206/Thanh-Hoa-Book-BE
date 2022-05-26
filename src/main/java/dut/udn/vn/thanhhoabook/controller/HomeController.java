@@ -52,7 +52,7 @@ public class HomeController {
         String jwt = jwtUtil.generateJwtToken(userDetails);
 
         return ResponseEntity.ok(new LoginResponse(jwt, userDetails.getFullName(), userDetails.getUsername(),
-                userDetails.getAuthorities().toString()));
+                userDetails.getRole(), userDetails.getImage()));
     }
 
     @PostMapping("/register")
