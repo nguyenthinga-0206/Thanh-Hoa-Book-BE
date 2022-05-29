@@ -2,6 +2,7 @@ package dut.udn.vn.thanhhoabook.security.service;
 
 import dut.udn.vn.thanhhoabook.model.user.Account;
 import dut.udn.vn.thanhhoabook.model.user.User;
+import lombok.Getter;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -9,6 +10,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import java.util.Collection;
 import java.util.Collections;
 
+@Getter
 public class MyUserDetails implements UserDetails {
     private static final long serialVersionUID = 1L;
 
@@ -18,29 +20,22 @@ public class MyUserDetails implements UserDetails {
 
     private String email;
 
-    private String phone;
+    private String image;
+
+    private String role;
 
     private Collection<? extends GrantedAuthority> authorities;
 
     public MyUserDetails(User user) {
         this.fullName = user.getFullName();
         this.account = user.getAccount();
-        this.email = user.getEmail();
-        this.phone = user.getPhone();
-        this.authorities = Collections.singleton(new SimpleGrantedAuthority(user.getAccount().getRole().toString()));
+        this.image = user.getImage();
+        this.role = user.getAccount().getRole().toString();
     }
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return authorities;
-    }
-
-    public String getFullName() {
-        return fullName;
-    }
-
-    public String getEmail() {
-        return email;
     }
 
     @Override
@@ -51,10 +46,6 @@ public class MyUserDetails implements UserDetails {
     @Override
     public String getUsername() {
         return account.getUsername();
-    }
-
-    public String getPhone() {
-        return phone;
     }
 
     @Override

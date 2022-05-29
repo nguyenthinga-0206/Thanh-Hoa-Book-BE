@@ -39,23 +39,20 @@ public class HomeController {
     private PasswordEncoder passwordEncoder;
 
     @PostMapping("/login")
-    private ResponseEntity<LoginResponse> login(@Valid @RequestBody LoginRequest loginRequest, BindingResult bindResult) {
+    private ResponseEntity<LoginResponse> login(@RequestBody LoginRequest loginRequest) {
 
-        if (bindResult.hasErrors()) {
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-        } else {
-            Authentication authentication = authenticationManager
-                    .authenticate(new UsernamePasswordAuthenticationToken(loginRequest.getEmail(), loginRequest.getPassword()));
 
-            SecurityContextHolder.getContext().setAuthentication(authentication);
+        Authentication authentication = authenticationManager
+                .authenticate(new UsernamePasswordAuthenticationToken(loginRequest.getEmail(), loginRequest.getPassword()));
 
-            MyUserDetails userDetails = (MyUserDetails) authentication.getPrincipal();
+        SecurityContextHolder.getContext().setAuthentication(authentication);
 
-            String jwt = jwtUtil.generateJwtToken(userDetails);
+        MyUserDetails userDetails = (MyUserDetails) authentication.getPrincipal();
 
-            return ResponseEntity.ok(new LoginResponse(jwt, userDetails.getFullName(), userDetails.getUsername(),
-                    userDetails.getAuthorities().toString()));
-        }
+        String jwt = jwtUtil.generateJwtToken(userDetails);
+
+        return ResponseEntity.ok(new LoginResponse(jwt, userDetails.getFullName(), userDetails.getUsername(),
+                userDetails.getRole(), userDetails.getImage()));
     }
 
     @PostMapping("/register")

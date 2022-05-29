@@ -1,6 +1,7 @@
 package dut.udn.vn.thanhhoabook.model.order;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import dut.udn.vn.thanhhoabook.contans.order.EStatus;
 import dut.udn.vn.thanhhoabook.model.user.Account;
 import lombok.*;
 
@@ -18,6 +19,9 @@ public class Orders {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    /*
+    Mã đơn hàng
+     */
     private String code;
 
     private String fullName;
@@ -26,13 +30,18 @@ public class Orders {
 
     private String address;
 
+    /*
+    Chi tiết đơn hàng
+     */
     @OneToMany(mappedBy = "orders")
     @JsonIgnore
     private List<OrderDetails> orderDetailsList;
 
-    @OneToMany(mappedBy = "orders")
-    @JsonIgnore
-    private List<TimeStatus> timeStatusList;
+    /*
+    Trạng thái đơn hàng
+     */
+    @Enumerated(EnumType.STRING)
+    private EStatus status = EStatus.PENDING;
 
     @ManyToOne
     @JoinColumn(name = "account")

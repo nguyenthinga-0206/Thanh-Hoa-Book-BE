@@ -49,10 +49,13 @@ public class BookController {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
         Book book = modelMapper.map(bookRequest, Book.class);
-        for (Image image : book.getImageList()) {
-            imageService.save(image);
-        }
         bookService.save(book);
+        if (book.getImageList() != null) {
+            for (Image image : book.getImageList()) {
+                image.setBook(book);
+                imageService.save(image);
+            }
+        }
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
 
@@ -76,6 +79,14 @@ public class BookController {
         }
         Book book = modelMapper.map(bookRequest, Book.class);
         bookService.save(book);
+        if (book.getImageList() != null) {
+            for (Image image : book.getImageList()) {
+                image.setName(image.getName());
+                image.setPath(image.getPath());
+                image.setBook(book);
+                imageService.save(image);
+            }
+        }
         return new ResponseEntity<>(HttpStatus.OK);
     }
 

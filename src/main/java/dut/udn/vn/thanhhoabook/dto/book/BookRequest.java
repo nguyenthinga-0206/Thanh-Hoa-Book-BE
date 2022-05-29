@@ -35,6 +35,6 @@ public class BookRequest {
     private String description;
     private List<Image> imageList;
     private List<Author> authorList;
-    private List<Producer> producerList;
+    private Producer producer;
     private List<Category> categoryList;
 }

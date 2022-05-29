@@ -24,7 +24,9 @@ public class Book {
     private Long id;
 
     private String name;
-
+    /*
+    Mã sách
+     */
     private String code;
 
     private Integer yearPublishing;
@@ -38,12 +40,17 @@ public class Book {
     private Float lenght;
 
     private Float height;
-
+    /*
+    Số trang
+     */
     private Integer pageNumber;
 
     @Enumerated(EnumType.STRING)
     private ELanguage language;
 
+    /*
+    Kiểu bìa
+     */
     @Enumerated(EnumType.STRING)
     private ECover formCover;
 
@@ -55,6 +62,9 @@ public class Book {
     @OneToMany(mappedBy = "book")
     private List<Image> imageList;
 
+    /*
+    Tác giả
+     */
     @ManyToMany(fetch = FetchType.EAGER)
     @Fetch(FetchMode.SUBSELECT)
     @JoinTable(name = "book_author",
@@ -62,10 +72,16 @@ public class Book {
             inverseJoinColumns = @JoinColumn(name = "author_id"))
     private List<Author> authorList;
 
+    /*
+    Nhà xuất bản
+     */
     @ManyToOne
-    @JoinColumn(name="producer_id")
+    @JoinColumn(name = "producer_id")
     private Producer producer;
 
+    /*
+    Thể loại
+     */
     @ManyToMany(fetch = FetchType.EAGER)
     @Fetch(FetchMode.SUBSELECT)
     @JoinTable(name = "book_category",
