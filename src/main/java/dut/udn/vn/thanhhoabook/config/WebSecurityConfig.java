@@ -54,11 +54,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         http.antMatcher("/api/**").httpBasic().authenticationEntryPoint(entryPointJwt())
                 .and()
                 .authorizeRequests()
-//        http.cors().and().csrf().disable()
-//                .exceptionHandling().authenticationEntryPoint(entryPointJwt()).and()
-//                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-//                .and()
-//                .authorizeRequests()
                 .antMatchers("/api/home").permitAll()
                 .antMatchers(HttpMethod.POST, "/api/login").permitAll()
                 .antMatchers(HttpMethod.POST, "/api/register").permitAll()
@@ -91,12 +86,10 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers(HttpMethod.POST, "api/producer").hasAnyRole("ADMIN", "MANAGEMENT")
                 .antMatchers(HttpMethod.PUT, "api/producer").hasAnyRole("ADMIN", "MANAGEMENT")
                 .antMatchers(HttpMethod.DELETE, "api/producer").hasAnyRole("ADMIN", "MANAGEMENT")
-//                .anyRequest().authenticated();
                 .and().sessionManagement()
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()
                 .addFilterBefore(jwtRequestFilter(), UsernamePasswordAuthenticationFilter.class);
-//        http.addFilterBefore(jwtRequestFilter(), UsernamePasswordAuthenticationFilter.class);
     }
 }
 
