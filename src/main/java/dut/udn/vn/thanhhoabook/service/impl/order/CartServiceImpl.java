@@ -19,9 +19,17 @@ public class CartServiceImpl implements IcartService {
         return cartReponsitoty.findCartByDeleteFlagFalse();
     }
 
+    public List<Cart> getByUser(String user) {
+        return cartReponsitoty.getByUser(user);
+    }
+
     @Override
     public Optional<Cart> getById(Long id) {
         return cartReponsitoty.findById(id);
+    }
+
+    public Optional<Cart> getByBookId(String user, Long id) {
+        return cartReponsitoty.findCartByDeleteFlagFalseAndUserCreateFlagAndBook_Id(user, id);
     }
 
     @Override
