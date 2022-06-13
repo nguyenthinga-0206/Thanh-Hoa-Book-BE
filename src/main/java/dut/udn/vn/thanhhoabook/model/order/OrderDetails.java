@@ -1,5 +1,6 @@
 package dut.udn.vn.thanhhoabook.model.order;
 
+import dut.udn.vn.thanhhoabook.utils.Listener;
 import dut.udn.vn.thanhhoabook.utils.TimeUser;
 import dut.udn.vn.thanhhoabook.model.book.Book;
 import lombok.*;
@@ -8,7 +9,7 @@ import javax.persistence.*;
 import java.time.LocalDateTime;
 
 @Entity
-@EntityListeners(TimeUser.class)
+@EntityListeners(Listener.class)
 @Getter
 @Setter
 @NoArgsConstructor

@@ -11,17 +11,16 @@ public class Listener {
 
     private LocalDateTime dateTime = LocalDateTime.now();
 
-    private MyUserDetails userRequest = (MyUserDetails) SecurityContextHolder.getContext().getAuthentication();
+//    private MyUserDetails userRequest = (MyUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 
     /**
      * Thực hiện trước khi thêm mới
      */
     @PrePersist
     public void preInser(TimeUser timeUser) {
+        MyUserDetails userRequest = (MyUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         timeUser.setTimeCreateFlag(dateTime);
         timeUser.setTimeUpdateFlag(dateTime);
-//        MyUserDetails userRequest = (MyUserDetails) SecurityContextHolder.getContext().getAuthentication();
-        System.out.println(userRequest);
         timeUser.setUserCreateFlag(userRequest.getAccount().getUsername());
         timeUser.setUserUpdateFlag(userRequest.getAccount().getUsername());
     }
@@ -31,8 +30,8 @@ public class Listener {
      */
     @PreUpdate
     public void preUpdate(TimeUser timeUser) {
+        MyUserDetails userRequest = (MyUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         timeUser.setTimeUpdateFlag(dateTime);
-//        MyUserDetails userRequest = (MyUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         timeUser.setUserUpdateFlag(userRequest.getAccount().getUsername());
     }
 }

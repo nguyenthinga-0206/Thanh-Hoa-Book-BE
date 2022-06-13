@@ -19,10 +19,6 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 
 @Configuration
 @EnableWebSecurity
-@EnableGlobalMethodSecurity(
-        // securedEnabled = true,
-        // jsr250Enabled = true,
-        prePostEnabled = true)
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
@@ -54,11 +50,15 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 //        http.csrf().disable();
 //        http.authorizeRequests().anyRequest().permitAll();
 
-        http.cors().and().csrf().disable()
-                .exceptionHandling().authenticationEntryPoint(entryPointJwt()).and()
-                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+        http.csrf().ignoringAntMatchers("/api/**");
+        http.antMatcher("/api/**").httpBasic().authenticationEntryPoint(entryPointJwt())
                 .and()
                 .authorizeRequests()
+//        http.cors().and().csrf().disable()
+//                .exceptionHandling().authenticationEntryPoint(entryPointJwt()).and()
+//                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+//                .and()
+//                .authorizeRequests()
                 .antMatchers("/api/home").permitAll()
                 .antMatchers(HttpMethod.POST, "/api/login").permitAll()
                 .antMatchers(HttpMethod.POST, "/api/register").permitAll()
@@ -91,9 +91,12 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers(HttpMethod.POST, "api/producer").hasAnyRole("ADMIN", "MANAGEMENT")
                 .antMatchers(HttpMethod.PUT, "api/producer").hasAnyRole("ADMIN", "MANAGEMENT")
                 .antMatchers(HttpMethod.DELETE, "api/producer").hasAnyRole("ADMIN", "MANAGEMENT")
-                .anyRequest().authenticated();
-
-        http.addFilterBefore(jwtRequestFilter(), UsernamePasswordAuthenticationFilter.class);
+//                .anyRequest().authenticated();
+                .and().sessionManagement()
+                .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+                .and()
+                .addFilterBefore(jwtRequestFilter(), UsernamePasswordAuthenticationFilter.class);
+//        http.addFilterBefore(jwtRequestFilter(), UsernamePasswordAuthenticationFilter.class);
     }
 }
 

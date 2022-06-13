@@ -3,6 +3,7 @@ package dut.udn.vn.thanhhoabook.model.book;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import dut.udn.vn.thanhhoabook.contans.book.ECover;
 import dut.udn.vn.thanhhoabook.contans.book.ELanguage;
+import dut.udn.vn.thanhhoabook.utils.Listener;
 import dut.udn.vn.thanhhoabook.utils.TimeUser;
 import dut.udn.vn.thanhhoabook.model.order.Cart;
 import dut.udn.vn.thanhhoabook.model.order.OrderDetails;
@@ -19,7 +20,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 @Entity
-@EntityListeners(TimeUser.class)
+@EntityListeners(Listener.class)
 @Getter
 @Setter
 @NoArgsConstructor
