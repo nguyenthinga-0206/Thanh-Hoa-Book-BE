@@ -3,8 +3,13 @@ package dut.udn.vn.thanhhoabook.model.book;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import dut.udn.vn.thanhhoabook.contans.book.ECover;
 import dut.udn.vn.thanhhoabook.contans.book.ELanguage;
+import dut.udn.vn.thanhhoabook.utils.TimeUser;
+import dut.udn.vn.thanhhoabook.model.order.Cart;
 import dut.udn.vn.thanhhoabook.model.order.OrderDetails;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
 
@@ -14,11 +19,12 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 @Entity
+@EntityListeners(TimeUser.class)
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class Book {
+public class Book implements TimeUser {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -88,6 +94,10 @@ public class Book {
             joinColumns = @JoinColumn(name = "book_id"),
             inverseJoinColumns = @JoinColumn(name = "category_id"))
     private List<Category> categoryList;
+
+    @OneToMany(mappedBy = "book")
+    @JsonIgnore
+    private List<Cart> cartList;
 
     @OneToMany(mappedBy = "book")
     @JsonIgnore

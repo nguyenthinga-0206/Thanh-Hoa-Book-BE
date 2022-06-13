@@ -10,6 +10,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
+import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
@@ -18,6 +19,10 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 
 @Configuration
 @EnableWebSecurity
+@EnableGlobalMethodSecurity(
+        // securedEnabled = true,
+        // jsr250Enabled = true,
+        prePostEnabled = true)
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
@@ -49,8 +54,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 //        http.csrf().disable();
 //        http.authorizeRequests().anyRequest().permitAll();
 
-        http.csrf().ignoringAntMatchers("/api/**");
-        http.antMatcher("/api/**").httpBasic().authenticationEntryPoint(entryPointJwt())
+        http.cors().and().csrf().disable()
+                .exceptionHandling().authenticationEntryPoint(entryPointJwt()).and()
+                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()
                 .authorizeRequests()
                 .antMatchers("/api/home").permitAll()
@@ -67,6 +73,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers(HttpMethod.GET, "/api/orders/?").hasAnyRole("ADMIN", "MANAGEMENT")
                 .antMatchers(HttpMethod.GET, "/api/orders/?/detail").hasAnyRole("ADMIN", "MANAGEMENT")
                 .antMatchers(HttpMethod.PUT, "/api/orders/status").hasAnyRole("ADMIN", "MANAGEMENT")
+                .antMatchers(HttpMethod.GET, "/api/cart/add-cart").permitAll()
+                .antMatchers(HttpMethod.POST, "/api/cart").permitAll()
                 .antMatchers(HttpMethod.GET, "/api/book/**").permitAll()
                 .antMatchers(HttpMethod.POST, "/api/book").hasAnyRole("ADMIN", "MANAGEMENT")
                 .antMatchers(HttpMethod.PUT, "/api/book/**").hasAnyRole("ADMIN", "MANAGEMENT")
@@ -83,10 +91,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers(HttpMethod.POST, "api/producer").hasAnyRole("ADMIN", "MANAGEMENT")
                 .antMatchers(HttpMethod.PUT, "api/producer").hasAnyRole("ADMIN", "MANAGEMENT")
                 .antMatchers(HttpMethod.DELETE, "api/producer").hasAnyRole("ADMIN", "MANAGEMENT")
-                .and().sessionManagement()
-                .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-                .and()
-                .addFilterBefore(jwtRequestFilter(), UsernamePasswordAuthenticationFilter.class);
+                .anyRequest().authenticated();
+
+        http.addFilterBefore(jwtRequestFilter(), UsernamePasswordAuthenticationFilter.class);
     }
 }
 

@@ -9,6 +9,8 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.Collection;
 import java.util.Collections;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Getter
 public class MyUserDetails implements UserDetails {
@@ -22,16 +24,29 @@ public class MyUserDetails implements UserDetails {
 
     private String image;
 
-    private String role;
+//    private String role;
 
     private Collection<? extends GrantedAuthority> authorities;
 
-    public MyUserDetails(User user) {
-        this.fullName = user.getFullName();
-        this.account = user.getAccount();
-        this.image = user.getImage();
-        this.role = user.getAccount().getRole().toString();
+    public MyUserDetails(String fullName, String email, Account account, String image, Collection<? extends GrantedAuthority> authorities) {
+        this.fullName = fullName;
+        this.email = email;
+        this.account = account;
+        this.image = image;
+        this.authorities = authorities;
     }
+
+    public static MyUserDetails build(User user) {
+        List<GrantedAuthority> authorities = Collections.singletonList(new SimpleGrantedAuthority(user.getAccount().getRole().toString()));
+
+        return new MyUserDetails(
+                user.getFullName(),
+                user.getEmail(),
+                user.getAccount(),
+                user.getPhone(),
+                authorities);
+    }
+
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {

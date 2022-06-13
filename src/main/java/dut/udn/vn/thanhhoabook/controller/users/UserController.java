@@ -6,6 +6,7 @@ import dut.udn.vn.thanhhoabook.model.user.User;
 import dut.udn.vn.thanhhoabook.service.user.IUserService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -19,6 +20,7 @@ import java.util.Optional;
 @RestController
 @RequestMapping("api/users")
 public class UserController {
+
     @Autowired
     private IUserService userService;
 

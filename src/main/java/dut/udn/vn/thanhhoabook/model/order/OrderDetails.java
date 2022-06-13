@@ -1,5 +1,6 @@
 package dut.udn.vn.thanhhoabook.model.order;
 
+import dut.udn.vn.thanhhoabook.utils.TimeUser;
 import dut.udn.vn.thanhhoabook.model.book.Book;
 import lombok.*;
 
@@ -7,11 +8,12 @@ import javax.persistence.*;
 import java.time.LocalDateTime;
 
 @Entity
+@EntityListeners(TimeUser.class)
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class OrderDetails {
+public class OrderDetails implements TimeUser {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;

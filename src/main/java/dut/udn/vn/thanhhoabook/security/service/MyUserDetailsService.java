@@ -3,6 +3,7 @@ package dut.udn.vn.thanhhoabook.security.service;
 import dut.udn.vn.thanhhoabook.model.user.User;
 import dut.udn.vn.thanhhoabook.service.user.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -17,9 +18,13 @@ public class MyUserDetailsService implements UserDetailsService {
     private IUserService userService;
 
     @Override
-    public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
-        Optional<User> accountOptional = this.userService.findByEmail(email);
-        return accountOptional.map(MyUserDetails::new).orElse(null);
+    public MyUserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
+//        Optional<User> accountOptional = this.userService.findByEmail(email);
+//        return accountOptional.map(MyUserDetails::new).orElse(null);
+        User user = userService.findByEmail(email)
+                .orElseThrow(() -> new UsernameNotFoundException("User Not Found with email: " + email));
+
+        return MyUserDetails.build(user);
     }
 
 }

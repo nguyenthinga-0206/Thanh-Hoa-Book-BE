@@ -3,6 +3,7 @@ package dut.udn.vn.thanhhoabook.controller.book;
 import dut.udn.vn.thanhhoabook.model.book.Category;
 import dut.udn.vn.thanhhoabook.service.book.ICategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -15,6 +16,7 @@ import java.util.Optional;
 @RestController
 @RequestMapping("api/category")
 public class CategoryController {
+
     @Autowired
     private ICategoryService categoryService;
 

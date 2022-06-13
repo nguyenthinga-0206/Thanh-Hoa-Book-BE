@@ -1,6 +1,7 @@
 package dut.udn.vn.thanhhoabook.model.book;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import dut.udn.vn.thanhhoabook.utils.TimeUser;
 import lombok.*;
 
 import javax.persistence.*;
@@ -8,11 +9,12 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 @Entity
+@EntityListeners(TimeUser.class)
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class Producer {
+public class Producer implements TimeUser {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;

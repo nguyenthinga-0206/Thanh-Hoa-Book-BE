@@ -1,8 +1,11 @@
-package dut.udn.vn.thanhhoabook.model.book;
+package dut.udn.vn.thanhhoabook.model.order;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import dut.udn.vn.thanhhoabook.utils.TimeUser;
-import lombok.*;
+import dut.udn.vn.thanhhoabook.model.book.Book;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -13,19 +16,16 @@ import java.time.LocalDateTime;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class Image implements TimeUser {
+public class Cart implements TimeUser {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String name;
-
-    private String path;
-
     @ManyToOne
     @JoinColumn(name = "book_id")
-    @JsonIgnore
     private Book book;
+
+    private Integer quantity;
 
     private Boolean deleteFlag = Boolean.FALSE;
 
@@ -36,4 +36,9 @@ public class Image implements TimeUser {
     private String userUpdateFlag;
 
     private LocalDateTime timeUpdateFlag;
+
+    public Cart(Book book, Integer quantity) {
+        this.book = book;
+        this.quantity = quantity;
+    }
 }

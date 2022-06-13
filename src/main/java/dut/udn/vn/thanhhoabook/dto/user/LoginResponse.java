@@ -12,6 +12,7 @@ import lombok.Setter;
 public class LoginResponse {
     private String jwt;
     private String fullName;
+    private String email;
     private String username;
     private String role;
     private String image;

@@ -2,19 +2,24 @@ package dut.udn.vn.thanhhoabook.model.order;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import dut.udn.vn.thanhhoabook.contans.order.EStatus;
+import dut.udn.vn.thanhhoabook.utils.TimeUser;
 import dut.udn.vn.thanhhoabook.model.user.Account;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.util.List;
 
 @Entity
+@EntityListeners(TimeUser.class)
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class Orders {
+public class Orders implements TimeUser {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;

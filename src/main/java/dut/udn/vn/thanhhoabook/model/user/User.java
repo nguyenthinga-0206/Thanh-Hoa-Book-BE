@@ -2,6 +2,8 @@ package dut.udn.vn.thanhhoabook.model.user;
 
 import dut.udn.vn.thanhhoabook.contans.user.EGender;
 
+import dut.udn.vn.thanhhoabook.utils.TimeUser;
+import dut.udn.vn.thanhhoabook.utils.Listener;
 import lombok.*;
 
 import javax.persistence.*;
@@ -9,12 +11,13 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Entity
+@EntityListeners(Listener.class)
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "users")
-public class User {
+public class User implements TimeUser {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
