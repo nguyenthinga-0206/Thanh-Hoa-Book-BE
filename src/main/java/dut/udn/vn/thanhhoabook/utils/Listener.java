@@ -11,8 +11,6 @@ public class Listener {
 
     private LocalDateTime dateTime = LocalDateTime.now();
 
-//    private MyUserDetails userRequest = (MyUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-
     /**
      * Thực hiện trước khi thêm mới
      */
