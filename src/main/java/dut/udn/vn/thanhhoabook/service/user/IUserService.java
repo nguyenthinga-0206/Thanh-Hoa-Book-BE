@@ -11,8 +11,6 @@ import java.util.Optional;
 public interface IUserService extends IService<User, Long> {
     Boolean isEmailExists(String email);
 
-    Boolean isPhoneExists(String phone);
-
     Optional<User> findByEmail(String email);
 
     Boolean changePassword(ChangePasswordRequest changePasswordRequest);

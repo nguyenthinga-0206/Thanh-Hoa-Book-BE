@@ -29,8 +29,6 @@ public class User implements TimeUser {
 
     private String email;
 
-    private String phone;
-
     @Enumerated(EnumType.STRING)
     private EGender gender;
 

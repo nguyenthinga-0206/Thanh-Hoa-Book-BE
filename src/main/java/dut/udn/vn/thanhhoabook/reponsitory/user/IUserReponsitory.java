@@ -11,8 +11,6 @@ import java.util.Optional;
 public interface IUserReponsitory extends JpaRepository<User, Long> {
     Boolean existsByEmail(String email);
 
-    Boolean existsByPhone(String phone);
-
     Optional<User> findByEmail(String email);
 
     List<User> findUserByDeleteFlagFalse();

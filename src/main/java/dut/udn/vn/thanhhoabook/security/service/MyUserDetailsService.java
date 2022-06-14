@@ -19,8 +19,6 @@ public class MyUserDetailsService implements UserDetailsService {
 
     @Override
     public MyUserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
-//        Optional<User> accountOptional = this.userService.findByEmail(email);
-//        return accountOptional.map(MyUserDetails::new).orElse(null);
         User user = userService.findByEmail(email)
                 .orElseThrow(() -> new UsernameNotFoundException("User Not Found with email: " + email));
 

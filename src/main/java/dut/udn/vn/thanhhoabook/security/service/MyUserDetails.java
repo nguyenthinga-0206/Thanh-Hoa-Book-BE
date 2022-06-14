@@ -24,8 +24,6 @@ public class MyUserDetails implements UserDetails {
 
     private String image;
 
-//    private String role;
-
     private Collection<? extends GrantedAuthority> authorities;
 
     public MyUserDetails(String fullName, String email, Account account, String image, Collection<? extends GrantedAuthority> authorities) {
@@ -43,7 +41,7 @@ public class MyUserDetails implements UserDetails {
                 user.getFullName(),
                 user.getEmail(),
                 user.getAccount(),
-                user.getPhone(),
+                user.getImage(),
                 authorities);
     }
 

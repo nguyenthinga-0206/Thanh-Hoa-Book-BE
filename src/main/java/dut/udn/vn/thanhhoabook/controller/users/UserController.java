@@ -36,7 +36,7 @@ public class UserController {
         if (userRequest == null) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
-        if (userService.isEmailExists(userRequest.getEmail()) || userService.isPhoneExists(userRequest.getPhone())) {
+        if (userService.isEmailExists(userRequest.getEmail())) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
         User user = modelMapper.map(userRequest, User.class);
