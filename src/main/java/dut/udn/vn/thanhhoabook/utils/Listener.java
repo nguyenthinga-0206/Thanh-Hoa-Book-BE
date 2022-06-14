@@ -16,11 +16,17 @@ public class Listener {
      */
     @PrePersist
     public void preInser(TimeUser timeUser) {
-        MyUserDetails userRequest = (MyUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        timeUser.setTimeCreateFlag(dateTime);
-        timeUser.setTimeUpdateFlag(dateTime);
-        timeUser.setUserCreateFlag(userRequest.getAccount().getUsername());
-        timeUser.setUserUpdateFlag(userRequest.getAccount().getUsername());
+        try {
+            String user = null;
+            MyUserDetails userRequest = (MyUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+            if (userRequest != null) {
+                user = userRequest.getAccount().getUsername();
+            }
+            timeUser.setTimeCreateFlag(dateTime);
+            timeUser.setTimeUpdateFlag(dateTime);
+            timeUser.setUserCreateFlag(user);
+            timeUser.setUserUpdateFlag(user);
+        } catch (Exception e) { }
     }
 
     /**
@@ -28,8 +34,14 @@ public class Listener {
      */
     @PreUpdate
     public void preUpdate(TimeUser timeUser) {
-        MyUserDetails userRequest = (MyUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        timeUser.setTimeUpdateFlag(dateTime);
-        timeUser.setUserUpdateFlag(userRequest.getAccount().getUsername());
+        try {
+            String user = null;
+            MyUserDetails userRequest = (MyUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+            if (userRequest != null) {
+                user = userRequest.getAccount().getUsername();
+            }
+            timeUser.setTimeUpdateFlag(dateTime);
+            timeUser.setUserUpdateFlag(user);
+        } catch (Exception e) { }
     }
 }

@@ -49,4 +49,10 @@ public class Account implements TimeUser {
     private String userUpdateFlag;
 
     private LocalDateTime timeUpdateFlag;
+
+    public Account(String username, String password, ERole role) {
+        this.username = username;
+        this.password = password;
+        this.role = role;
+    }
 }

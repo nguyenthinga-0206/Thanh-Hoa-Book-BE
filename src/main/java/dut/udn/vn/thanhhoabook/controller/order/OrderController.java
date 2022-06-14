@@ -1,13 +1,20 @@
 package dut.udn.vn.thanhhoabook.controller.order;
 
+import dut.udn.vn.thanhhoabook.dto.order.OrderRequest;
+import dut.udn.vn.thanhhoabook.dto.order.OrdersDetailRequest;
 import dut.udn.vn.thanhhoabook.dto.order.StatusRequest;
+import dut.udn.vn.thanhhoabook.model.book.Book;
 import dut.udn.vn.thanhhoabook.model.order.OrderDetails;
 import dut.udn.vn.thanhhoabook.model.order.Orders;
+import dut.udn.vn.thanhhoabook.security.service.MyUserDetails;
+import dut.udn.vn.thanhhoabook.service.book.IBookService;
 import dut.udn.vn.thanhhoabook.service.order.IOrderDetailsService;
 import dut.udn.vn.thanhhoabook.service.order.IOrderService;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 import javax.transaction.Status;
@@ -24,6 +31,12 @@ public class OrderController {
 
     @Autowired
     private IOrderDetailsService orderDetailsService;
+
+    @Autowired
+    private IBookService bookService;
+
+    @Autowired
+    private ModelMapper modelMapper;
 
     @GetMapping()
     public ResponseEntity<List<Orders>> listOrder() {
@@ -53,5 +66,26 @@ public class OrderController {
         ordersOptional.get().setStatus(statusRequest.getStatus());
         ordersService.save(ordersOptional.get());
         return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    @PostMapping()
+    public ResponseEntity<Status> createOrder(@RequestBody OrderRequest orderRequest) {
+        if (orderRequest == null) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        Orders order = modelMapper.map(orderRequest, Orders.class);
+        ordersService.save(order);
+        for (OrderDetails details : orderRequest.getDetailsList()) {
+            Book book = bookService.getById(details.getBook().getId()).get();
+            if (book.getQuantity() >= details.getQuantity()) {
+                book.setQuantity(book.getQuantity() - details.getQuantity());
+                bookService.save(book);
+                details.setOrders(order);
+                orderDetailsService.save(details);
+            } else {
+                return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            }
+        }
+        return new ResponseEntity<>(HttpStatus.CREATED);
     }
 }

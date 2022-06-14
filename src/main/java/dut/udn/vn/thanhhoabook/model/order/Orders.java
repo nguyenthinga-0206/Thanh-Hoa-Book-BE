@@ -11,6 +11,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -28,13 +29,15 @@ public class Orders implements TimeUser {
     /*
     Mã đơn hàng
      */
-    private String code;
+    private String code = String.valueOf((long) Math.floor(((Math.random() * 99999999) + 10000000)));
 
     private String fullName;
 
     private String phone;
 
     private String address;
+
+    private BigDecimal ship = BigDecimal.valueOf(0);
 
     /*
     Chi tiết đơn hàng

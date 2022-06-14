@@ -42,6 +42,12 @@ public class BookController {
                 .orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
 
+    @GetMapping("/category/{id}")
+    public ResponseEntity<List<Book>> getByCategory(@PathVariable("id") Long id) {
+        List<Book> bookList = bookService.getBycategory(id);
+        return bookList.isEmpty() ? new ResponseEntity<>(HttpStatus.NOT_FOUND) : new ResponseEntity<>(bookList, HttpStatus.OK);
+    }
+
     @PostMapping()
     public ResponseEntity<Status> createBook(@RequestBody BookRequest bookRequest) {
         if (bookRequest == null) {

@@ -19,6 +19,10 @@ public class BookServiceImpl implements IBookService {
         return bookReponsitory.findBookByDeleteFlagFalse();
     }
 
+    public List<Book> getBycategory(Long id) {
+        return bookReponsitory.getBycategory(id);
+    }
+
     @Override
     public Optional<Book> getById(Long id) {
         return bookReponsitory.findById(id);

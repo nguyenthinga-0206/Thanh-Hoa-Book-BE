@@ -48,4 +48,9 @@ public class User implements TimeUser {
     private String userUpdateFlag;
 
     private LocalDateTime timeUpdateFlag;
+
+    public User(String email, Account account) {
+        this.email = email;
+        this.account = account;
+    }
 }
