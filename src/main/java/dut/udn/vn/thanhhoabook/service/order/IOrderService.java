@@ -9,5 +9,5 @@ import java.util.List;
 
 @Service
 public interface IOrderService extends IService<Orders, Long> {
-    List<Orders> getOrderHistory(String user, EStatus status);
+    List<Orders> getOrderHistory(String user, String status);
 }

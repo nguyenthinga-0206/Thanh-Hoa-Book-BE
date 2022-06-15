@@ -45,7 +45,7 @@ public class OrderController {
     }
 
     @GetMapping("history")
-    public ResponseEntity<List<OrderResponse>> listOrderHistory(@RequestParam("status") EStatus status) {
+    public ResponseEntity<List<OrderResponse>> listOrderHistory(@RequestParam("status") String status) {
         List<Orders> ordersList = ordersService.getOrderHistory(Custom.getUsername(), status);
         if (ordersList.isEmpty()) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);

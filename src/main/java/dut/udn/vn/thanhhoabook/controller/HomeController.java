@@ -47,8 +47,8 @@ public class HomeController {
         String jwt = jwtUtil.generateJwtToken(userDetails);
         String role = userDetails.getAuthorities().stream().map(item -> item.getAuthority()).collect(Collectors.joining());
 
-        return ResponseEntity.ok(new LoginResponse(jwt, userDetails.getFullName(), userDetails.getEmail(), userDetails.getUsername(),
-                role, userDetails.getImage()));
+        return ResponseEntity.ok(new LoginResponse(jwt, userDetails.getEmail(), userDetails.getUsername(),
+                role));
     }
 
     @PostMapping("/register")

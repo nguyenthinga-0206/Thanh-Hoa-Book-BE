@@ -15,21 +15,15 @@ import java.util.List;
 public class MyUserDetails implements UserDetails {
     private static final long serialVersionUID = 1L;
 
-    private String fullName;
-
     private Account account;
 
     private String email;
 
-    private String image;
-
     private Collection<? extends GrantedAuthority> authorities;
 
-    public MyUserDetails(String fullName, String email, Account account, String image, Collection<? extends GrantedAuthority> authorities) {
-        this.fullName = fullName;
+    public MyUserDetails(String email, Account account, Collection<? extends GrantedAuthority> authorities) {
         this.email = email;
         this.account = account;
-        this.image = image;
         this.authorities = authorities;
     }
 
@@ -37,10 +31,8 @@ public class MyUserDetails implements UserDetails {
         List<GrantedAuthority> authorities = Collections.singletonList(new SimpleGrantedAuthority(user.getAccount().getRole().toString()));
 
         return new MyUserDetails(
-                user.getFullName(),
                 user.getEmail(),
                 user.getAccount(),
-                user.getImage(),
                 authorities);
     }
 

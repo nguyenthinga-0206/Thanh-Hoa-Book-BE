@@ -31,8 +31,9 @@ public class OrderServiceImpl implements IOrderService {
     }
 
     @Override
-    public List<Orders> getOrderHistory(String user, EStatus status) {
-        return orderReponsitory.getOrderHistoryStatus(user, status);
+    public List<Orders> getOrderHistory(String user, String status) {
+        EStatus eStatus = EStatus.valueOf(status);
+        return orderReponsitory.getOrderHistoryStatus(user, eStatus);
     }
 
 }
