@@ -1,5 +1,6 @@
 package dut.udn.vn.thanhhoabook.model.order;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import dut.udn.vn.thanhhoabook.utils.Listener;
 import dut.udn.vn.thanhhoabook.utils.TimeUser;
 import dut.udn.vn.thanhhoabook.model.book.Book;
@@ -27,6 +28,7 @@ public class OrderDetails implements TimeUser {
 
     @ManyToOne
     @JoinColumn(name = "orders_id")
+    @JsonIgnore
     private Orders orders;
 
     private Boolean deleteFlag = Boolean.FALSE;

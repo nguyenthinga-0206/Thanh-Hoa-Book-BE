@@ -1,6 +1,5 @@
 package dut.udn.vn.thanhhoabook.model.order;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import dut.udn.vn.thanhhoabook.contans.order.EStatus;
 import dut.udn.vn.thanhhoabook.utils.Listener;
 import dut.udn.vn.thanhhoabook.utils.TimeUser;
@@ -43,7 +42,6 @@ public class Orders implements TimeUser {
     Chi tiết đơn hàng
      */
     @OneToMany(mappedBy = "orders")
-    @JsonIgnore
     private List<OrderDetails> orderDetailsList;
 
     /*

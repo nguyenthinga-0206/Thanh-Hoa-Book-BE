@@ -2,6 +2,7 @@ package dut.udn.vn.thanhhoabook.dto.order;
 
 import dut.udn.vn.thanhhoabook.contans.order.EStatus;
 import dut.udn.vn.thanhhoabook.dto.book.BookResponse;
+import dut.udn.vn.thanhhoabook.model.order.OrderDetails;
 import dut.udn.vn.thanhhoabook.model.order.Orders;
 import dut.udn.vn.thanhhoabook.model.user.Account;
 import lombok.AllArgsConstructor;
@@ -16,5 +17,6 @@ import java.util.List;
 @AllArgsConstructor
 public class OrderResponse {
     private Orders orders;
+//    private List<OrderDetails> orderDetailsList;
     private BigDecimal totalPrice;
 }
