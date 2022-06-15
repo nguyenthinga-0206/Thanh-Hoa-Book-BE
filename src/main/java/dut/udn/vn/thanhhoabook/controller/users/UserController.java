@@ -3,7 +3,7 @@ package dut.udn.vn.thanhhoabook.controller.users;
 import dut.udn.vn.thanhhoabook.dto.user.ChangePasswordRequest;
 import dut.udn.vn.thanhhoabook.dto.user.UserRequest;
 import dut.udn.vn.thanhhoabook.model.user.User;
-import dut.udn.vn.thanhhoabook.service.user.IUserService;
+import dut.udn.vn.thanhhoabook.service.impl.user.UserServiceImpl;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -20,7 +20,7 @@ import java.util.Optional;
 public class UserController {
 
     @Autowired
-    private IUserService userService;
+    private UserServiceImpl userService;
 
     @Autowired
     private ModelMapper modelMapper;
@@ -29,6 +29,12 @@ public class UserController {
     public ResponseEntity<List<User>> listUser() {
         List<User> userList = userService.getAll();
         return userList.isEmpty() ? new ResponseEntity<>(HttpStatus.NOT_FOUND) : new ResponseEntity<>(userList, HttpStatus.OK);
+    }
+
+    @GetMapping("profile")
+    public ResponseEntity<User> getUser(@RequestParam("email") String email) {
+        Optional<User> user = userService.findByEmail(email);
+        return user.isPresent() ? new ResponseEntity<>(user.get(), HttpStatus.OK) : new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 
     @PostMapping()

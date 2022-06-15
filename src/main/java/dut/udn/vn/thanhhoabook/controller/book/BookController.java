@@ -3,10 +3,10 @@ package dut.udn.vn.thanhhoabook.controller.book;
 import dut.udn.vn.thanhhoabook.dto.book.AddBookRequest;
 import dut.udn.vn.thanhhoabook.dto.book.BookRequest;
 import dut.udn.vn.thanhhoabook.model.book.*;
-import dut.udn.vn.thanhhoabook.service.book.*;
+import dut.udn.vn.thanhhoabook.service.impl.book.BookServiceImpl;
+import dut.udn.vn.thanhhoabook.service.impl.book.ImageServiceImpl;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -21,10 +21,10 @@ import java.util.Optional;
 public class BookController {
 
     @Autowired
-    private IBookService bookService;
+    private BookServiceImpl bookService;
 
     @Autowired
-    private IImageService imageService;
+    private ImageServiceImpl imageService;
 
     @Autowired
     private ModelMapper modelMapper;

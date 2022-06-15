@@ -3,14 +3,12 @@ package dut.udn.vn.thanhhoabook.config;
 import dut.udn.vn.thanhhoabook.security.jwt.AuthEntryPointJwt;
 import dut.udn.vn.thanhhoabook.security.jwt.JwtRequestFilter;
 import dut.udn.vn.thanhhoabook.security.service.MyUserDetailsService;
-import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
-import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
@@ -58,6 +56,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/api/home").permitAll()
                 .antMatchers(HttpMethod.POST, "/api/login").permitAll()
                 .antMatchers(HttpMethod.POST, "/api/register").permitAll()
+                .antMatchers(HttpMethod.GET, "/api/users/profile").permitAll()
+                .antMatchers(HttpMethod.PUT, "/api/users/change-password").permitAll()
+                .antMatchers(HttpMethod.PUT, "/api/users/profile").permitAll()
                 .antMatchers(HttpMethod.GET, "/api/book/**").permitAll()
                 .antMatchers(HttpMethod.GET, "api/author").permitAll()
                 .antMatchers(HttpMethod.GET, "api/category").permitAll()
@@ -85,12 +86,11 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers(HttpMethod.PUT, "api/producer").hasAnyRole("ADMIN", "MANAGEMENT")
                 .antMatchers(HttpMethod.DELETE, "api/producer/**").hasAnyRole("ADMIN", "MANAGEMENT")
                 //User
-                .antMatchers(HttpMethod.PUT, "/api/users/change-password").hasRole("USER")
-                .antMatchers(HttpMethod.PUT, "/api/users/profile").hasRole("USER")
                 .antMatchers(HttpMethod.POST, "/api/cart").hasRole("USER")
                 .antMatchers(HttpMethod.GET, "/api/cart").hasRole("USER")
                 .antMatchers(HttpMethod.DELETE, "/api/cart/**").hasRole("USER")
                 .antMatchers(HttpMethod.POST, "api/orders").hasRole("USER")
+                .antMatchers(HttpMethod.POST, "api/orders/history").hasRole("USER")
                 .and().sessionManagement()
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()

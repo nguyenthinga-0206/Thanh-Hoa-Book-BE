@@ -1,23 +1,23 @@
 package dut.udn.vn.thanhhoabook.controller.order;
 
-import dut.udn.vn.thanhhoabook.dto.order.OrderRequest;
-import dut.udn.vn.thanhhoabook.dto.order.OrdersDetailRequest;
-import dut.udn.vn.thanhhoabook.dto.order.StatusRequest;
+import dut.udn.vn.thanhhoabook.contans.order.EStatus;
+import dut.udn.vn.thanhhoabook.dto.order.*;
 import dut.udn.vn.thanhhoabook.model.book.Book;
 import dut.udn.vn.thanhhoabook.model.order.OrderDetails;
 import dut.udn.vn.thanhhoabook.model.order.Orders;
-import dut.udn.vn.thanhhoabook.security.service.MyUserDetails;
-import dut.udn.vn.thanhhoabook.service.book.IBookService;
-import dut.udn.vn.thanhhoabook.service.order.IOrderDetailsService;
-import dut.udn.vn.thanhhoabook.service.order.IOrderService;
+import dut.udn.vn.thanhhoabook.service.impl.book.BookServiceImpl;
+import dut.udn.vn.thanhhoabook.service.impl.order.OrderDetailsServiceImpl;
+import dut.udn.vn.thanhhoabook.service.impl.order.OrderServiceImpl;
+import dut.udn.vn.thanhhoabook.utils.Custom;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 import javax.transaction.Status;
+import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -27,13 +27,13 @@ import java.util.Optional;
 public class OrderController {
 
     @Autowired
-    private IOrderService ordersService;
+    private OrderServiceImpl ordersService;
 
     @Autowired
-    private IOrderDetailsService orderDetailsService;
+    private OrderDetailsServiceImpl orderDetailsService;
 
     @Autowired
-    private IBookService bookService;
+    private BookServiceImpl bookService;
 
     @Autowired
     private ModelMapper modelMapper;
@@ -42,6 +42,20 @@ public class OrderController {
     public ResponseEntity<List<Orders>> listOrder() {
         List<Orders> ordersList = ordersService.getAll();
         return ordersList.isEmpty() ? new ResponseEntity<>(HttpStatus.NOT_FOUND) : new ResponseEntity<>(ordersList, HttpStatus.OK);
+    }
+
+    @GetMapping("history")
+    public ResponseEntity<List<OrderResponse>> listOrderHistory(@RequestParam("status") EStatus status) {
+        List<Orders> ordersList = ordersService.getOrderHistory(Custom.getUsername(), status);
+        if (ordersList.isEmpty()) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        List<OrderResponse> orderResponsesList = new ArrayList<>();
+        for (Orders orders : ordersList) {
+            BigDecimal total = Custom.totalPriceOrder(orders.getOrderDetailsList());
+            orderResponsesList.add(new OrderResponse(orders, total));
+        }
+        return new ResponseEntity<>(orderResponsesList, HttpStatus.OK);
     }
 
     @GetMapping("/{id}")

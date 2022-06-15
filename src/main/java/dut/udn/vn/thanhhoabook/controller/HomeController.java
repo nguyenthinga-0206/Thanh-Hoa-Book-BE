@@ -7,25 +7,17 @@ import dut.udn.vn.thanhhoabook.model.user.Account;
 import dut.udn.vn.thanhhoabook.model.user.User;
 import dut.udn.vn.thanhhoabook.security.jwt.JwtUtil;
 import dut.udn.vn.thanhhoabook.security.service.MyUserDetails;
-import dut.udn.vn.thanhhoabook.service.user.IAccountService;
-import dut.udn.vn.thanhhoabook.service.user.IUserService;
-import org.modelmapper.ModelMapper;
+import dut.udn.vn.thanhhoabook.service.impl.user.UserServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.orm.hibernate5.HibernateTemplate;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import javax.transaction.Status;
-import javax.validation.Valid;
-import java.util.List;
 import java.util.stream.Collectors;
 
 @CrossOrigin
@@ -39,7 +31,7 @@ public class HomeController {
     private JwtUtil jwtUtil;
 
     @Autowired
-    private IUserService userService;
+    private UserServiceImpl userService;
 
     @PostMapping("/login")
     private ResponseEntity<LoginResponse> login(@RequestBody LoginRequest loginRequest) {

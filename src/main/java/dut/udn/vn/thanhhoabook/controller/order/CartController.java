@@ -4,13 +4,12 @@ import dut.udn.vn.thanhhoabook.dto.order.CartRequet;
 import dut.udn.vn.thanhhoabook.dto.order.CartResponse;
 import dut.udn.vn.thanhhoabook.model.book.Book;
 import dut.udn.vn.thanhhoabook.model.order.Cart;
-import dut.udn.vn.thanhhoabook.security.service.MyUserDetails;
 import dut.udn.vn.thanhhoabook.service.impl.book.BookServiceImpl;
 import dut.udn.vn.thanhhoabook.service.impl.order.CartServiceImpl;
+import dut.udn.vn.thanhhoabook.utils.Custom;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 import javax.transaction.Status;
@@ -28,18 +27,13 @@ public class CartController {
     @Autowired
     private BookServiceImpl bookService;
 
-    private String getUsername() {
-        MyUserDetails userDetails = (MyUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        return userDetails.getAccount().getUsername();
-    }
-
     @GetMapping()
     public ResponseEntity<CartResponse> listCart() {
-        List<Cart> cartList = cartService.getByUser(getUsername());
+        List<Cart> cartList = cartService.getByUser(Custom.getUsername());
         if (cartList.isEmpty()) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
-        BigDecimal total = totalPrice(cartList);
+        BigDecimal total = Custom.totalPriceCart(cartList);
         CartResponse cartResponse = new CartResponse(cartList, total);
         return new ResponseEntity<>(cartResponse, HttpStatus.OK);
     }
@@ -49,7 +43,7 @@ public class CartController {
         if (cartRequet == null) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
-        Optional<Cart> cartOptional = this.cartService.getByBookId(getUsername(), cartRequet.getId());
+        Optional<Cart> cartOptional = this.cartService.getByBookId(Custom.getUsername(), cartRequet.getId());
         if (cartOptional.isPresent()) {
             cartOptional.get().setQuantity(cartOptional.get().getQuantity() + cartRequet.getQuantity());
             cartService.save(cartOptional.get());
@@ -71,11 +65,4 @@ public class CartController {
         return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 
-    private BigDecimal totalPrice(List<Cart> cartList) {
-        BigDecimal total = new BigDecimal(0);
-        for (Cart cart1 : cartList) {
-            total = total.add(BigDecimal.valueOf(cart1.getQuantity()).multiply(cart1.getBook().getPrice()));
-        }
-        return total;
-    }
 }
