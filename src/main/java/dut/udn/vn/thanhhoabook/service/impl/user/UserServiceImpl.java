@@ -25,11 +25,6 @@ public class UserServiceImpl implements IUserService {
     }
 
     @Override
-    public Boolean isPhoneExists(String phone) {
-        return userReponsitory.existsByPhone(phone);
-    }
-
-    @Override
     public Optional<User> findByEmail(String email) {
         return userReponsitory.findByEmail(email);
     }

@@ -9,29 +9,33 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.Collection;
 import java.util.Collections;
+import java.util.List;
 
 @Getter
 public class MyUserDetails implements UserDetails {
     private static final long serialVersionUID = 1L;
 
-    private String fullName;
-
     private Account account;
 
     private String email;
 
-    private String image;
-
-    private String role;
-
     private Collection<? extends GrantedAuthority> authorities;
 
-    public MyUserDetails(User user) {
-        this.fullName = user.getFullName();
-        this.account = user.getAccount();
-        this.image = user.getImage();
-        this.role = user.getAccount().getRole().toString();
+    public MyUserDetails(String email, Account account, Collection<? extends GrantedAuthority> authorities) {
+        this.email = email;
+        this.account = account;
+        this.authorities = authorities;
     }
+
+    public static MyUserDetails build(User user) {
+        List<GrantedAuthority> authorities = Collections.singletonList(new SimpleGrantedAuthority(user.getAccount().getRole().toString()));
+
+        return new MyUserDetails(
+                user.getEmail(),
+                user.getAccount(),
+                authorities);
+    }
+
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {

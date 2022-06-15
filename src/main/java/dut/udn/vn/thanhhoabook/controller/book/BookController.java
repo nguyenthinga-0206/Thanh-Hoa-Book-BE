@@ -3,7 +3,8 @@ package dut.udn.vn.thanhhoabook.controller.book;
 import dut.udn.vn.thanhhoabook.dto.book.AddBookRequest;
 import dut.udn.vn.thanhhoabook.dto.book.BookRequest;
 import dut.udn.vn.thanhhoabook.model.book.*;
-import dut.udn.vn.thanhhoabook.service.book.*;
+import dut.udn.vn.thanhhoabook.service.impl.book.BookServiceImpl;
+import dut.udn.vn.thanhhoabook.service.impl.book.ImageServiceImpl;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -18,11 +19,12 @@ import java.util.Optional;
 @RestController
 @RequestMapping("api/book")
 public class BookController {
-    @Autowired
-    private IBookService bookService;
 
     @Autowired
-    private IImageService imageService;
+    private BookServiceImpl bookService;
+
+    @Autowired
+    private ImageServiceImpl imageService;
 
     @Autowired
     private ModelMapper modelMapper;
@@ -38,6 +40,12 @@ public class BookController {
         Optional<Book> book = bookService.getById(id);
         return book.map(value -> new ResponseEntity<>(value, HttpStatus.OK))
                 .orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
+    }
+
+    @GetMapping("/category/{id}")
+    public ResponseEntity<List<Book>> getByCategory(@PathVariable("id") Long id) {
+        List<Book> bookList = bookService.getBycategory(id);
+        return bookList.isEmpty() ? new ResponseEntity<>(HttpStatus.NOT_FOUND) : new ResponseEntity<>(bookList, HttpStatus.OK);
     }
 
     @PostMapping()

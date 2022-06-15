@@ -1,20 +1,26 @@
 package dut.udn.vn.thanhhoabook.model.order;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import dut.udn.vn.thanhhoabook.contans.order.EStatus;
+import dut.udn.vn.thanhhoabook.utils.Listener;
+import dut.udn.vn.thanhhoabook.utils.TimeUser;
 import dut.udn.vn.thanhhoabook.model.user.Account;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import javax.persistence.*;
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.List;
 
 @Entity
+@EntityListeners(Listener.class)
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class Orders {
+public class Orders implements TimeUser {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -22,7 +28,7 @@ public class Orders {
     /*
     Mã đơn hàng
      */
-    private String code;
+    private String code = String.valueOf((long) Math.floor(((Math.random() * 99999999) + 10000000)));
 
     private String fullName;
 
@@ -30,11 +36,12 @@ public class Orders {
 
     private String address;
 
+    private BigDecimal ship = BigDecimal.valueOf(0);
+
     /*
     Chi tiết đơn hàng
      */
     @OneToMany(mappedBy = "orders")
-    @JsonIgnore
     private List<OrderDetails> orderDetailsList;
 
     /*

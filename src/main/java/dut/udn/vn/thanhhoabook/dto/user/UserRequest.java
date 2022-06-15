@@ -22,7 +22,6 @@ public class UserRequest {
     private String fullName;
     private LocalDate birthday;
     private String email;
-    private String phone;
     @Enumerated(EnumType.STRING)
     private EGender gender;
     private String image;

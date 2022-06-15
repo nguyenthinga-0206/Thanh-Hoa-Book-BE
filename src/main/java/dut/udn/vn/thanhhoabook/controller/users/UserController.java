@@ -3,12 +3,11 @@ package dut.udn.vn.thanhhoabook.controller.users;
 import dut.udn.vn.thanhhoabook.dto.user.ChangePasswordRequest;
 import dut.udn.vn.thanhhoabook.dto.user.UserRequest;
 import dut.udn.vn.thanhhoabook.model.user.User;
-import dut.udn.vn.thanhhoabook.service.user.IUserService;
+import dut.udn.vn.thanhhoabook.service.impl.user.UserServiceImpl;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
 import javax.transaction.Status;
@@ -19,8 +18,9 @@ import java.util.Optional;
 @RestController
 @RequestMapping("api/users")
 public class UserController {
+
     @Autowired
-    private IUserService userService;
+    private UserServiceImpl userService;
 
     @Autowired
     private ModelMapper modelMapper;
@@ -31,12 +31,18 @@ public class UserController {
         return userList.isEmpty() ? new ResponseEntity<>(HttpStatus.NOT_FOUND) : new ResponseEntity<>(userList, HttpStatus.OK);
     }
 
+    @GetMapping("profile")
+    public ResponseEntity<User> getUser(@RequestParam("email") String email) {
+        Optional<User> user = userService.findByEmail(email);
+        return user.isPresent() ? new ResponseEntity<>(user.get(), HttpStatus.OK) : new ResponseEntity<>(HttpStatus.NOT_FOUND);
+    }
+
     @PostMapping()
     public ResponseEntity<Status> createUser(@RequestBody UserRequest userRequest) {
         if (userRequest == null) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
-        if (userService.isEmailExists(userRequest.getEmail()) || userService.isPhoneExists(userRequest.getPhone())) {
+        if (userService.isEmailExists(userRequest.getEmail())) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
         User user = modelMapper.map(userRequest, User.class);
