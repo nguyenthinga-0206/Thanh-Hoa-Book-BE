@@ -18,4 +18,9 @@ public interface IBookReponsitory extends JpaRepository<Book, Long> {
             "inner join public.book_category on book.id = book_category.book_id " +
             "where delete_flag = false and book_category.category_id = :id")
     List<Book> getBycategory(@Param("id") Long id);
+
+    @Query(nativeQuery = true, value = "select * from public.book " +
+            "where delete_flag = false " +
+            "and lower(unaccent(name)) like concat( '%',lower(:name),'%')")
+    List<Book> findBookByDeleteFlagFalseAndNameContains(String name);
 }

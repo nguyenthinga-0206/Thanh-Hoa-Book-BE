@@ -60,6 +60,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers(HttpMethod.PUT, "/api/users/change-password").permitAll()
                 .antMatchers(HttpMethod.PUT, "/api/users/profile").permitAll()
                 .antMatchers(HttpMethod.GET, "/api/book/**").permitAll()
+                .antMatchers(HttpMethod.GET, "/api/book/search").permitAll()
                 .antMatchers(HttpMethod.GET, "api/author").permitAll()
                 .antMatchers(HttpMethod.GET, "api/category").permitAll()
                 .antMatchers(HttpMethod.GET, "api/book/category/**").permitAll()
@@ -69,7 +70,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 //Admin, management
                 .antMatchers(HttpMethod.GET, "/api/users").hasAnyRole("ADMIN", "MANAGEMENT")
                 .antMatchers(HttpMethod.POST, "/api/users").hasAnyRole("ADMIN", "MANAGEMENT")
-                .antMatchers(HttpMethod.PUT, "/api/users").hasAnyRole("ADMIN", "MANAGEMENT")
+                .antMatchers(HttpMethod.PUT, "/api/users").hasAnyRole("ADMIN")
                 .antMatchers(HttpMethod.DELETE, "/api/users/**").hasAnyRole("ADMIN", "MANAGEMENT")
                 .antMatchers(HttpMethod.GET, "/api/orders").hasAnyRole("ADMIN", "MANAGEMENT")
                 .antMatchers(HttpMethod.PUT, "/api/orders/status").hasAnyRole("ADMIN", "MANAGEMENT")
