@@ -91,7 +91,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers(HttpMethod.GET, "/api/cart").hasRole("USER")
                 .antMatchers(HttpMethod.DELETE, "/api/cart/**").hasRole("USER")
                 .antMatchers(HttpMethod.POST, "api/orders").hasRole("USER")
-                .antMatchers(HttpMethod.POST, "api/orders/history").hasRole("USER")
+                .antMatchers(HttpMethod.GET, "api/orders/history").hasRole("USER")
                 .and().sessionManagement()
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()

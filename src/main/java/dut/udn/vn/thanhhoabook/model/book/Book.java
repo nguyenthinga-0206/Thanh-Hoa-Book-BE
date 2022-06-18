@@ -47,8 +47,7 @@ public class Book implements TimeUser {
 
     private Float lenght;
 
-    @Null
-    private Float height;
+    private Float height = Float.valueOf(0);
     /*
     Số trang
      */
