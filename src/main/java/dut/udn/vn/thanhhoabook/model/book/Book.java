@@ -15,6 +15,7 @@ import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
 
 import javax.persistence.*;
+import javax.validation.constraints.Null;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.List;
@@ -46,7 +47,7 @@ public class Book implements TimeUser {
 
     private Float lenght;
 
-    private Float height;
+    private Float height = Float.valueOf(0);
     /*
     Số trang
      */

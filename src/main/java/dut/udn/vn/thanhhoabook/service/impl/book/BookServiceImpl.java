@@ -24,6 +24,11 @@ public class BookServiceImpl implements IBookService {
     }
 
     @Override
+    public List<Book> getByName(String name) {
+        return bookReponsitory.findBookByDeleteFlagFalseAndNameContains(name);
+    }
+
+    @Override
     public Optional<Book> getById(Long id) {
         return bookReponsitory.findById(id);
     }

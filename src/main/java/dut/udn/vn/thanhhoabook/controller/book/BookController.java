@@ -42,6 +42,12 @@ public class BookController {
                 .orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
 
+    @GetMapping("/search")
+    public ResponseEntity<List<Book>> getByName(@RequestParam("name") String name) {
+        List<Book> bookList = bookService.getByName(name);
+        return bookList.isEmpty() ? new ResponseEntity<>(HttpStatus.NOT_FOUND) : new ResponseEntity<>(bookList, HttpStatus.OK);
+    }
+
     @GetMapping("/category/{id}")
     public ResponseEntity<List<Book>> getByCategory(@PathVariable("id") Long id) {
         List<Book> bookList = bookService.getBycategory(id);

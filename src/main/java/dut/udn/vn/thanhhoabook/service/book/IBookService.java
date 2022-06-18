@@ -11,4 +11,6 @@ public interface IBookService extends IService<Book, Long> {
     Boolean existsByCode(String code);
 
     List<Book> getBycategory(Long id);
+
+    List<Book> getByName(String name);
 }
