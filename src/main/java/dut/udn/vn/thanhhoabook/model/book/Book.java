@@ -51,7 +51,7 @@ public class Book implements TimeUser {
     /*
     Số trang
      */
-    private Integer pageNumber;
+    private Integer pageNumber = 0;
 
     @Enumerated(EnumType.STRING)
     private ELanguage language;
