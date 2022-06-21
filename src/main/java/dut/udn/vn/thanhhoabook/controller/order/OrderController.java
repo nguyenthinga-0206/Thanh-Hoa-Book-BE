@@ -88,17 +88,24 @@ public class OrderController {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
         Orders order = modelMapper.map(orderRequest, Orders.class);
+//        try {
+            for (OrderDetails details : orderRequest.getDetailsList()) {
+                Book book = bookService.getById(details.getBook().getId()).get();
+                if (book.getQuantity() >= details.getQuantity()) {
+                } else {
+                    return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+                }
+            }
+//        }catch (Exception e){
+//            System.out.println(e.getMessage());
+//        }
         ordersService.save(order);
         for (OrderDetails details : orderRequest.getDetailsList()) {
             Book book = bookService.getById(details.getBook().getId()).get();
-            if (book.getQuantity() >= details.getQuantity()) {
-                book.setQuantity(book.getQuantity() - details.getQuantity());
-                bookService.save(book);
-                details.setOrders(order);
-                orderDetailsService.save(details);
-            } else {
-                return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-            }
+            book.setQuantity(book.getQuantity() - details.getQuantity());
+            bookService.save(book);
+            details.setOrders(order);
+            orderDetailsService.save(details);
         }
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
