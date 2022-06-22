@@ -13,6 +13,7 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
 import javax.transaction.Status;
@@ -83,22 +84,19 @@ public class OrderController {
     }
 
     @PostMapping()
+//    @Transactional
     public ResponseEntity<Status> createOrder(@RequestBody OrderRequest orderRequest) {
         if (orderRequest == null) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
         Orders order = modelMapper.map(orderRequest, Orders.class);
-//        try {
-            for (OrderDetails details : orderRequest.getDetailsList()) {
-                Book book = bookService.getById(details.getBook().getId()).get();
-                if (book.getQuantity() >= details.getQuantity()) {
-                } else {
-                    return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-                }
+        for (OrderDetails details : orderRequest.getDetailsList()) {
+            Book book = bookService.getById(details.getBook().getId()).get();
+            if (book.getQuantity() >= details.getQuantity()) {
+            } else {
+                return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
             }
-//        }catch (Exception e){
-//            System.out.println(e.getMessage());
-//        }
+        }
         ordersService.save(order);
         for (OrderDetails details : orderRequest.getDetailsList()) {
             Book book = bookService.getById(details.getBook().getId()).get();
