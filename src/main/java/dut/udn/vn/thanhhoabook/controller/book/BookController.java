@@ -91,6 +91,9 @@ public class BookController {
         if (!bookOptional.isPresent()) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
+        for (Image image: bookOptional.get().getImageList()) {
+            imageService.delete(image);
+        }
         Book book = modelMapper.map(bookRequest, Book.class);
         bookService.save(book);
         if (book.getImageList() != null) {

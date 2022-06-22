@@ -54,6 +54,17 @@ public class CartController {
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
 
+    @PutMapping("/{id}/{quantity}")
+    public ResponseEntity<Status> editCart(@PathVariable("id") Long id, @PathVariable("quantity") Integer quantity) {
+        Optional<Cart> cartOptional = cartService.getById(id);
+        if (cartOptional.isPresent()) {
+            cartOptional.get().setQuantity(quantity);
+            this.cartService.save(cartOptional.get());
+            return new ResponseEntity<>(HttpStatus.OK);
+        }
+        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+    }
+
     @DeleteMapping("/{id}")
     public ResponseEntity<Status> deleteCart(@PathVariable("id") Long id) {
         Optional<Cart> cartOptional = cartService.getById(id);

@@ -54,13 +54,13 @@ public class Book implements TimeUser {
     private Integer pageNumber = 0;
 
     @Enumerated(EnumType.STRING)
-    private ELanguage language;
+    private ELanguage language = null;
 
     /*
     Kiểu bìa
      */
     @Enumerated(EnumType.STRING)
-    private ECover formCover;
+    private ECover formCover = null;
 
     private BigDecimal price;
 

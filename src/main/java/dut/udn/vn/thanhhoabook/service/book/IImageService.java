@@ -6,4 +6,5 @@ import org.springframework.stereotype.Service;
 
 @Service
 public interface IImageService extends IService<Image, Long> {
+    void delete(Image image);
 }

@@ -28,4 +28,9 @@ public class ImageServiceImpl implements IImageService {
     public Image save(Image image) {
         return imageReponsitory.save(image);
     }
+
+    @Override
+    public void delete(Image image) {
+        imageReponsitory.delete(image);
+    }
 }
