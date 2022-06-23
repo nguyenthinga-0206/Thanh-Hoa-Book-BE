@@ -82,11 +82,13 @@ public class UserController {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
-    @DeleteMapping()
-    public ResponseEntity<Status> deleteuUser(@RequestParam("id") Long id) {
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Status> deleteuUser(@PathVariable("id") Long id) {
         Optional<User> userOptional = userService.getById(id);
         if (userOptional.isPresent()) {
             userOptional.get().setDeleteFlag(true);
+            userOptional.get().getAccount().setDeleteFlag(true);
+            userOptional.get().getAccount().setEnable(false);
             this.userService.save(userOptional.get());
             return new ResponseEntity<>(HttpStatus.OK);
         }
