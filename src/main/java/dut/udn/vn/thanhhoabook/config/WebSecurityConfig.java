@@ -69,8 +69,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers(HttpMethod.GET, "/api/orders/**/detail").permitAll()
                 //Admin, management
                 .antMatchers(HttpMethod.GET, "/api/users").hasAnyRole("ADMIN", "MANAGEMENT")
-                .antMatchers(HttpMethod.POST, "/api/users").hasAnyRole("ADMIN", "MANAGEMENT")
-                .antMatchers(HttpMethod.PUT, "/api/users").hasAnyRole("ADMIN")
+                .antMatchers(HttpMethod.POST, "/api/users").hasRole("ADMIN")
+                .antMatchers(HttpMethod.PUT, "/api/users").hasRole("ADMIN")
                 .antMatchers(HttpMethod.DELETE, "/api/users/**").hasAnyRole("ADMIN", "MANAGEMENT")
                 .antMatchers(HttpMethod.GET, "/api/orders").hasAnyRole("ADMIN", "MANAGEMENT")
                 .antMatchers(HttpMethod.PUT, "/api/orders/status").hasAnyRole("ADMIN", "MANAGEMENT")
@@ -86,6 +86,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers(HttpMethod.POST, "api/producer").hasAnyRole("ADMIN", "MANAGEMENT")
                 .antMatchers(HttpMethod.PUT, "api/producer").hasAnyRole("ADMIN", "MANAGEMENT")
                 .antMatchers(HttpMethod.DELETE, "api/producer/**").hasAnyRole("ADMIN", "MANAGEMENT")
+//                .antMatchers(HttpMethod.GET, "api/orders/statistic-revenue").hasRole("ADMIN")
+                .antMatchers(HttpMethod.GET, "api/orders/statistic-top").hasRole("ADMIN")
                 //User
                 .antMatchers(HttpMethod.POST, "/api/cart").hasRole("USER")
                 .antMatchers(HttpMethod.GET, "/api/cart").hasRole("USER")
