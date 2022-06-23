@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.DisabledException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -35,20 +36,18 @@ public class HomeController {
 
     @PostMapping("/login")
     private ResponseEntity<LoginResponse> login(@RequestBody LoginRequest loginRequest) {
-
-
-        Authentication authentication = authenticationManager
-                .authenticate(new UsernamePasswordAuthenticationToken(loginRequest.getEmail(), loginRequest.getPassword()));
-
-        SecurityContextHolder.getContext().setAuthentication(authentication);
-
-        MyUserDetails userDetails = (MyUserDetails) authentication.getPrincipal();
-
-        String jwt = jwtUtil.generateJwtToken(userDetails);
-        String role = userDetails.getAuthorities().stream().map(item -> item.getAuthority()).collect(Collectors.joining());
-
-        return ResponseEntity.ok(new LoginResponse(jwt, userDetails.getEmail(), userDetails.getUsername(),
-                role));
+        try {
+            Authentication authentication = authenticationManager
+                    .authenticate(new UsernamePasswordAuthenticationToken(loginRequest.getEmail(), loginRequest.getPassword()));
+            SecurityContextHolder.getContext().setAuthentication(authentication);
+            MyUserDetails userDetails = (MyUserDetails) authentication.getPrincipal();
+            String jwt = jwtUtil.generateJwtToken(userDetails);
+            String role = userDetails.getAuthorities().stream().map(item -> item.getAuthority()).collect(Collectors.joining());
+            return new ResponseEntity<>(new LoginResponse(jwt, userDetails.getEmail(), userDetails.getUsername(),
+                    role), HttpStatus.OK);
+        }catch (DisabledException exception){
+            return new ResponseEntity<>(HttpStatus.LOCKED);
+        }
     }
 
     @PostMapping("/register")

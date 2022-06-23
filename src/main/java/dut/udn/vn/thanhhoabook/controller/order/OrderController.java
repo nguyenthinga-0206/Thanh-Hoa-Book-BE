@@ -1,6 +1,5 @@
 package dut.udn.vn.thanhhoabook.controller.order;
 
-import dut.udn.vn.thanhhoabook.contans.order.EStatus;
 import dut.udn.vn.thanhhoabook.dto.order.*;
 import dut.udn.vn.thanhhoabook.model.book.Book;
 import dut.udn.vn.thanhhoabook.model.order.OrderDetails;
@@ -14,7 +13,6 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
 import javax.transaction.Status;
@@ -111,6 +109,7 @@ public class OrderController {
         for (OrderDetails details : orderRequest.getDetailsList()) {
             Book book = bookService.getById(details.getBook().getId()).get();
             if (book.getQuantity() >= details.getQuantity()) {
+
             } else {
                 return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
             }
