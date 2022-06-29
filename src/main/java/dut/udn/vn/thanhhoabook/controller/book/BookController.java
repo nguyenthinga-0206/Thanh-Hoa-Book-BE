@@ -96,7 +96,7 @@ public class BookController {
         }
         Book book = modelMapper.map(bookRequest, Book.class);
         bookService.save(book);
-        if (book.getImageList() != null) {
+        if (book.getImageList().size() != 0) {
             for (Image image : book.getImageList()) {
                 image.setName(image.getName());
                 image.setPath(image.getPath());
