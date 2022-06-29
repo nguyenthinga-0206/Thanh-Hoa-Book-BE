@@ -50,10 +50,6 @@ public class Orders implements TimeUser {
     @Enumerated(EnumType.STRING)
     private EStatus status = EStatus.PENDING;
 
-    @ManyToOne
-    @JoinColumn(name = "account")
-    private Account account;
-
     private Boolean deleteFlag = Boolean.FALSE;
 
     private String userCreateFlag;

@@ -36,10 +36,6 @@ public class Account implements TimeUser {
     @JsonIgnore
     private User user;
 
-    @OneToMany(mappedBy = "account")
-    @JsonIgnore
-    private List<Orders> ordersList;
-
     private Boolean deleteFlag = Boolean.FALSE;
 
     private String userCreateFlag;
