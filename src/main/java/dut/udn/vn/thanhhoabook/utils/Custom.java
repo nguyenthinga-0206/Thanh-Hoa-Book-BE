@@ -6,12 +6,19 @@ import dut.udn.vn.thanhhoabook.security.service.MyUserDetails;
 import org.springframework.security.core.context.SecurityContextHolder;
 
 import java.math.BigDecimal;
+import java.time.LocalDateTime;
 import java.util.List;
 
 public class Custom {
     public static String getUsername() {
         MyUserDetails userDetails = (MyUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         return userDetails.getAccount().getUsername();
+    }
+
+    public static Integer getYearNow(){
+        LocalDateTime dateTime = LocalDateTime.now();
+        Integer year = dateTime.getYear();
+        return year;
     }
 
     public static BigDecimal totalPriceCart(List<Cart> cartList) {

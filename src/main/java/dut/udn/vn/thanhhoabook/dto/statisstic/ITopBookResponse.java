@@ -1,4 +1,4 @@
-package dut.udn.vn.thanhhoabook.dto.order;
+package dut.udn.vn.thanhhoabook.dto.statisstic;
 
 import java.math.BigDecimal;
 
