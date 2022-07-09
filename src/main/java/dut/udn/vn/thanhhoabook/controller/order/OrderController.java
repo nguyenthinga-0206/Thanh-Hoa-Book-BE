@@ -18,7 +18,6 @@ import org.springframework.web.bind.annotation.*;
 import javax.transaction.Status;
 import java.math.BigDecimal;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -75,14 +74,6 @@ public class OrderController {
         return orderDetailsList.isEmpty() ? new ResponseEntity<>(HttpStatus.NOT_FOUND) : new ResponseEntity<>(orderDetailsList, HttpStatus.OK);
     }
 
-//    @GetMapping("/statistic-revenue")
-//    public ResponseEntity<List<MyItem>> statisticRevenue() {
-//        Date date = new Date();
-//        System.out.println(date);
-//        List<MyItem> listItem = statisticService.reportReceipt(date, 10);
-//        return new ResponseEntity<>(listItem, HttpStatus.OK);
-//    }
-
     @GetMapping("/statistic-top")
     public ResponseEntity<List<TopBookResponse>> statisticTop() {
         List<TopBookResponse> topBook = statisticService.topBook();
@@ -120,6 +111,7 @@ public class OrderController {
             book.setQuantity(book.getQuantity() - details.getQuantity());
             bookService.save(book);
             details.setOrders(order);
+            details.setPrice(details.getBook().getPrice());
             orderDetailsService.save(details);
         }
         return new ResponseEntity<>(HttpStatus.CREATED);

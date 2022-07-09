@@ -16,8 +16,8 @@ public class Custom {
 
     public static BigDecimal totalPriceCart(List<Cart> cartList) {
         BigDecimal total = new BigDecimal(0);
-        for (Cart cart1 : cartList) {
-            total = total.add(BigDecimal.valueOf(cart1.getQuantity()).multiply(cart1.getBook().getPrice()));
+        for (Cart cart : cartList) {
+            total = total.add(BigDecimal.valueOf(cart.getQuantity()).multiply(cart.getBook().getPrice()));
         }
         return total;
     }
@@ -25,7 +25,7 @@ public class Custom {
     public static BigDecimal totalPriceOrder(List<OrderDetails> details) {
         BigDecimal total = new BigDecimal(0);
         for (OrderDetails detail : details) {
-            total = total.add(BigDecimal.valueOf(detail.getQuantity()).multiply(detail.getBook().getPrice()));
+            total = total.add(BigDecimal.valueOf(detail.getQuantity()).multiply(detail.getPrice()));
         }
         return total;
     }

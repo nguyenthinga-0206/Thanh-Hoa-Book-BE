@@ -6,14 +6,10 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
-import java.util.Date;
 import java.util.List;
 
 @Repository
 public interface IStatisticReponsitory extends JpaRepository<Orders, Long> {
-
-//    @Query(nativeQuery = true, value = "SELECT * as total FROM public.orders")
-//    int reportReceipt(Date date);
 
     @Query(nativeQuery = true, value = "select b.name, count(b.id) as count, sum(b.price) as total " +
             "from public.order_details as od " +
