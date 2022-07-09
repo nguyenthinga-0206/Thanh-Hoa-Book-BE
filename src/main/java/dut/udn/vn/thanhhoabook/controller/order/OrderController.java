@@ -7,7 +7,6 @@ import dut.udn.vn.thanhhoabook.model.order.Orders;
 import dut.udn.vn.thanhhoabook.service.impl.book.BookServiceImpl;
 import dut.udn.vn.thanhhoabook.service.impl.order.OrderDetailsServiceImpl;
 import dut.udn.vn.thanhhoabook.service.impl.order.OrderServiceImpl;
-import dut.udn.vn.thanhhoabook.service.impl.order.StatisticServiceImpl;
 import dut.udn.vn.thanhhoabook.utils.Custom;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,9 +33,6 @@ public class OrderController {
 
     @Autowired
     private BookServiceImpl bookService;
-
-    @Autowired
-    private StatisticServiceImpl statisticService;
 
     @Autowired
     private ModelMapper modelMapper;
@@ -72,12 +68,6 @@ public class OrderController {
     public ResponseEntity<List<OrderDetails>> findOrderDetailsByOrderId(@PathVariable Long id) {
         List<OrderDetails> orderDetailsList = orderDetailsService.getByOrderId(id);
         return orderDetailsList.isEmpty() ? new ResponseEntity<>(HttpStatus.NOT_FOUND) : new ResponseEntity<>(orderDetailsList, HttpStatus.OK);
-    }
-
-    @GetMapping("/statistic-top")
-    public ResponseEntity<List<TopBookResponse>> statisticTop() {
-        List<TopBookResponse> topBook = statisticService.topBook();
-        return new ResponseEntity<>(topBook, HttpStatus.OK);
     }
 
     @PutMapping("/status")

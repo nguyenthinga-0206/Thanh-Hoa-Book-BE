@@ -1,15 +1,18 @@
 package dut.udn.vn.thanhhoabook.service.order;
 
-import dut.udn.vn.thanhhoabook.dto.order.MyItem;
-import dut.udn.vn.thanhhoabook.dto.order.TopBookResponse;
+import dut.udn.vn.thanhhoabook.dto.statisstic.StatisticResponse;
+import dut.udn.vn.thanhhoabook.dto.statisstic.TopBookResponse;
 import org.springframework.stereotype.Service;
 
-import java.util.Date;
 import java.util.List;
 
 @Service
 public interface IStatisticService {
-//    List<MyItem> reportReceipt(Date date, int limit);
+    List<StatisticResponse> StatisticByMonth(Integer year);
+
+    List<StatisticResponse> StatisticByQuarterly(Integer year);
+
+    List<StatisticResponse> StatisticByYear();
 
     List<TopBookResponse> topBook();
 }
